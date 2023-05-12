@@ -35,7 +35,7 @@ const Registration = async (req, res) => {
       password: bcrypt.hashSync(password, 10),
     });
 
-    res.status(200).json(newUser);
+    res.status(200).json({message: 'user is registered'});
 
   } catch (e) {
     authErrors(e, res, 'Registration');

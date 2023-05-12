@@ -3,13 +3,17 @@ import {regex} from '../config/config.js';
 import {errorCodes} from '../error/codes.js';
 import carErrors from '../error/errors/carErrors.js';
 import {checkStringDatas, validationDatas} from '../validations/validations.js';
+import {folderToSaveImg} from '../config/config.js';
 import carServices from '../services/carServices.js';
+import carResponses from '../responses/carResponses.js';
+import {deleteDir} from '../utils/checkDirectoryExists.js';
+import {saveImage, codeImage} from '../utils/base64.js';
 
 // ----------------------------------------------------------------------
 
 const CreateCar = async (req, res) => {
   try {
-    const {brend = '', model = '', year = '', number = '', price = ''} = req.body;
+    const {images = [], brend = '', model = '', year = '', number = '', price = ''} = req.body;
     const {userId} = req.middlewareAccessToken;
     
     checkStringDatas({
@@ -28,7 +32,10 @@ const CreateCar = async (req, res) => {
     });
 
     const newCar = await carServices.createCar({userId, brend, model, year, number, price});
-    res.status(200).json(newCar);
+
+    await saveImage(images, userId, newCar._id.toString());
+
+    res.status(200).json(carResponses.createCar(newCar));
 
   } catch (e) {
     carErrors(e, res, 'CreateCar');
@@ -42,7 +49,8 @@ const GetAllCar = async (req, res) => {
     const {userId} = req.middlewareAccessToken;
 
     const userCars = await carServices.findCars({userId});
-    res.status(200).json(userCars);
+
+    res.status(200).json(carResponses.getAllCars(userCars));
 
   } catch (e) {
     carErrors(e, res, 'GetAllCar');
@@ -70,7 +78,9 @@ const GetCarById = async (req, res) => {
     const car = await carServices.findCarById({userId, _id: carId});
     if (!car) throw (errorCodes.controllers.car.getById.carNotFound);
 
-    res.status(200).json(car);
+    const imagesToUser = await codeImage(userId, carId);
+
+    res.status(200).json(carResponses.getCarById(car, imagesToUser));
 
   } catch (e) {
     carErrors(e, res, 'GetCarById');
@@ -82,7 +92,7 @@ const GetCarById = async (req, res) => {
 const EditCar = async (req, res) => {
   try {
     const {userId} = req.middlewareAccessToken;
-    const {carId = '', brend = '', model = '', year = '', number = '', price = ''} = req.body;
+    const {images = [], carId = '', brend = '', model = '', year = '', number = '', price = ''} = req.body;
 
     checkStringDatas({
       error: errorCodes.controllers.car.edit.noData,
@@ -103,7 +113,9 @@ const EditCar = async (req, res) => {
     const editCar = await carServices.editCar({carId, userId, brend, model, year, number, price});
     if (!editCar.matchedCount) throw (errorCodes.controllers.car.edit.errorEdit);
 
-    res.status(200).json(editCar);
+    await saveImage(images, userId, carId);
+
+    res.status(200).json(carResponses.editCar(editCar));
 
   } catch (e) {
     carErrors(e, res, 'EditCar');
@@ -129,14 +141,17 @@ const DeleteCar = async (req, res) => {
     });
 
     const deletedCar = await carServices.deleteCar({userId, _id: carId});
-    if (!deletedCar.deletedCount) throw (errorCodes.controllers.car.delete.errorDelete);
 
-    res.status(200).json(deletedCar);
+    await deleteDir(userId, carId);
+
+    res.status(200).json(carResponses.deleteCar(deletedCar));
 
   } catch (e) {
     carErrors(e, res, 'DeleteCar');
   }
 }
+
+// ----------------------------------------------------------------------
 
 export {
   CreateCar,

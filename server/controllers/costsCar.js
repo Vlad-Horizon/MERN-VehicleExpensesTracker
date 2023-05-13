@@ -2,30 +2,32 @@
 import {regex} from '../config/config.js';
 import {errorCodes} from '../error/codes.js';
 import carCostErrors from '../error/errors/carCostErrors.js';
-import {checkStringDatas, validationDatas} from '../validations/validations.js';
+import {checkAndValidation} from '../validations/validations.js';
 import carCostServices from '../services/carCostServices.js';
+import carCostResponses from '../responses/carCostResponses.js';
 
 // ----------------------------------------------------------------------
 
-const AddCost = async (req, res) => {
+export const AddCost = async (req, res) => {
   try {
     const {carId = '', name = '', category = '', date = '', number = '', price = ''} = req.body;
     const {userId} = req.middlewareAccessToken;
 
-    checkStringDatas({
-      error: errorCodes.controllers.carCost.add.noData,
-      props: [carId, name, category, date, number, price],
-    });
-    validationDatas({
-      error: errorCodes.controllers.carCost.add.invalidData,
-      props: [
-        [carId, regex.mongoId],
-        [name, regex.carCost.name],
-        [category, regex.carCost.category],
-        [date, regex.carCost.date],
-        [number, regex.carCost.number],
-        [price, regex.carCost.price],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.carCost.addCarCost.invalidData,
+      errorValid: errorCodes.controllers.carCost.addCarCost.invalidData,
+      data: {
+        string: [
+          [carId, regex.mongoId],
+          [name, regex.carCost.name],
+          [category, regex.carCost.category],
+          [date, regex.carCost.date],
+        ],
+        number: [
+          [number, price > 0],
+          [price, price >= 0],
+        ],
+      }
     });
 
     const updateCar = await carCostServices.addCarCost({carId, userId, name, category, date, number, price});
@@ -39,26 +41,25 @@ const AddCost = async (req, res) => {
 
 // ----------------------------------------------------------------------
 
-const GetAllCarCosts = async (req, res) => {
+export const GetAllCarCosts = async (req, res) => {
   try {
-    const { carId = '' } = req.body;
-    const {userId} = req.middlewareAccessToken;
+    const { carId = '' } = req.params;
+    const { userId } = req.middlewareAccessToken;
 
-    checkStringDatas({
-      error: errorCodes.controllers.carCost.getAll.noData,
-      props: [carId],
-    });
-    validationDatas({
-      error: errorCodes.controllers.carCost.getAll.invalidData,
-      props: [
-        [carId, regex.mongoId],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.carCost.getAll.invalidData,
+      errorValid: errorCodes.controllers.car.getAll.invalidData,
+      data: {
+        string: [
+          [carId, regex.mongoId],
+        ],
+      }
     });
 
     const car = await carCostServices.findCarCosts({ _id: carId, userId });
     if (!car) throw (errorCodes.controllers.carCost.getAll.errorGetCosts);
 
-    res.status(200).json(car.costs);
+    res.status(200).json(carCostResponses.getAllCarCosts(car.costs));
 
   } catch (e) {
     carCostErrors(e, res, 'GetAllCarCosts');
@@ -67,26 +68,27 @@ const GetAllCarCosts = async (req, res) => {
 
 // ----------------------------------------------------------------------
 
-const EditCarCost = async (req, res) => {
+export const EditCarCost = async (req, res) => {
   try {
     const {carId = '', costId = '', name = '', category = '', date = '', number = '', price = ''} = req.body;
     const {userId} = req.middlewareAccessToken;
     
-    checkStringDatas({
-      error: errorCodes.controllers.carCost.edit.noData,
-      props: [carId, costId, name, category, date, number, price],
-    });
-    validationDatas({
-      error: errorCodes.controllers.carCost.edit.invalidData,
-      props: [
-        [carId, regex.mongoId],
-        [costId, regex.mongoId],
-        [name, regex.carCost.name],
-        [category, regex.carCost.category],
-        [date, regex.carCost.date],
-        [number, regex.carCost.number],
-        [price, regex.carCost.price],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.carCost.edit.noData,
+      errorValid: errorCodes.controllers.carCost.edit.invalidData,
+      data: {
+        string: [
+          [carId, regex.mongoId],
+          [costId, regex.mongoId],
+          [name, regex.carCost.name],
+          [category, regex.carCost.category],
+          [date, regex.carCost.date],
+        ],
+        number: [
+          [number, price > 0],
+          [price, price >= 0],
+        ],
+      }
     });
 
     const updateCarCost = await carCostServices.editCarCost({carId, userId, costId, name, category, date, number, price});
@@ -100,25 +102,24 @@ const EditCarCost = async (req, res) => {
 }
 
 // ----------------------------------------------------------------------
-// видалити витрату
-const DeleteCarCost = async (req, res) => {
+
+export const DeleteCarCost = async (req, res) => {
   try {
     const {carId = '', costId = ''} = req.body;
     const {userId} = req.middlewareAccessToken;
 
-    checkStringDatas({
-      error: errorCodes.controllers.carCost.delete.noData,
-      props: [carId, costId],
-    });
-    validationDatas({
-      error: errorCodes.controllers.carCost.delete.invalidData,
-      props: [
-        [carId, regex.mongoId],
-        [costId, regex.mongoId],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.carCost.edit.noData,
+      errorValid: errorCodes.controllers.carCost.edit.invalidData,
+      data: {
+        string: [
+          [carId, regex.mongoId],
+          [costId, regex.mongoId],
+        ],
+      }
     });
     
-    const updateCarCost = await carCostServices.deleteCarCost({carId, userId, costId, costId});
+    const updateCarCost = await carCostServices.deleteCarCost({carId, userId, costId});
     if (!updateCarCost.matchedCount) throw (errorCodes.controllers.carCost.delete.errorDelete)
 
     res.status(200).json(updateCarCost);
@@ -129,10 +130,3 @@ const DeleteCarCost = async (req, res) => {
 }
 
 // ----------------------------------------------------------------------
-
-export {
-  AddCost,
-  GetAllCarCosts,
-  EditCarCost,
-  DeleteCarCost,
-}

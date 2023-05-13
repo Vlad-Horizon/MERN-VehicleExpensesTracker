@@ -17,21 +17,20 @@ const CarSchema = new Schema({
     type: String,
     required: true,
   },
-
   number:{
     type: String,
     required: true,
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
   },  
   costs: [{
     name: String,
     category: String,
     date: String,
-    number: String,
-    price: String,
+    number: Number,
+    price: Number,
   }],
 })
 

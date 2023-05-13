@@ -1,9 +1,9 @@
 import express from 'express';
-import mongoose from "mongoose";
+import mongoose, { connect } from "mongoose";
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import routes from './routes/routes.js';
-import { port, folderToSaveImg } from './config/config.js';
+import { port, folderToSaveImg, mongoURL, connectWithRetryTime } from './config/config.js';
 import { checkDirectoryExistsAndCreate } from './utils/checkDirectoryExists.js';
 import { connectWithRetry } from './utils/connectWithRetry.js';
 
@@ -23,7 +23,18 @@ app.use(cors())
 
 const startServer = async () => {
   try {
-    await connectWithRetry();
+    if (!mongoURL) throw (111);
+
+    await connect(mongoURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      // useCreateIndex: true,
+      // useFindAndModify: false,
+    });
+
+    console.log('=== MongoDB connected successfully');
+
+    // 
 
     app.use('/', routes);
 
@@ -45,7 +56,16 @@ const startServer = async () => {
       });
     });
   } catch (error) {
-    console.log(`=== Failed to connect to MongoDB, ${error}`);
+    if (error === 111) {
+      console.log(`=== Error start server: ${error}`);
+      return;
+    }
+
+    if (error !== 111) {
+      console.log(`=== MongoDB connection failed, retrying in ${connectWithRetryTime} ms ...`);
+      setTimeout(startServer, connectWithRetryTime);
+      return;
+    }
   }
 };
 

@@ -20,6 +20,7 @@ class CarResponses {
         year: year,
         number: number,
         price: price,
+        sum: 0,
         costs: costs,
         images: images,
       }
@@ -33,6 +34,7 @@ class CarResponses {
       year: year,
       number: number,
       price: price,
+      sum: costs.reduce((acc, item) => acc + +item.price, 0),
       costs: costs.map((item) => {
         return {
           id: item._id,
@@ -48,32 +50,20 @@ class CarResponses {
   }
 
   getAllCars(props) {
-    const response = [];
-
-    for (const prop of props) {
-      response.push({
-        id: prop._id,
-        userId: prop.userId,
-        brend: prop.brend,
-        model: prop.model,
-        year: prop.year,
-        number: prop.number,
-        price: prop.price,
-        costs: prop.costs.map((item) => {
-          return {
-            id: item._id,
-            name: item.name,
-            category: item.category,
-            date: item.date,
-            number: item.number,
-            price: item.price,
-          }
-        }),
-        images: prop.images,
-      })
-    }
-
-    return response;
+    return (props.map((item) => {
+      const {_id, userId, brend, model, year, number, price, costs, image} = item;
+      return {
+        id: _id,
+        userId: userId,
+        brend: brend,
+        model: model,
+        year: year,
+        number: number,
+        price: price,
+        sum: costs.reduce((acc, item) => acc + +price, 0),
+        image: image,
+      }
+    }))
   }
 
   editCar(props) {

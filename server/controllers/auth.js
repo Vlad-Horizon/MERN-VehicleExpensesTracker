@@ -6,25 +6,24 @@ import bcrypt from 'bcrypt';
 import {jwtConfig, regex} from '../config/config.js';
 import {errorCodes} from '../error/codes.js';
 import authErrors from '../error/errors/authErrors.js';
-import {checkStringDatas, validationDatas} from '../validations/validations.js';
+import {checkAndValidation} from '../validations/validations.js';
 import userServices from '../services/userServices.js';
 
 // ----------------------------------------------------------------------
 
-const Registration = async (req, res) => {
+export const Registration = async (req, res) => {
   try {
     const { userName = '', password = '' } = req.body;
     
-    checkStringDatas({
-      error: errorCodes.controllers.authorization.registration.noData,
-      props: [userName, password],
-    });
-    validationDatas({
-      error: errorCodes.controllers.authorization.registration.invalidData,
-      props: [
-        [userName, regex.userName],
-        [password, regex.password],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.authorization.registration.noData,
+      errorValid: errorCodes.controllers.authorization.registration.invalidData,
+      data: {
+        string: [
+          [userName, regex.userName],
+          [password, regex.password],
+        ],
+      }
     });
     
     const user = await userServices.findUser({userName});
@@ -44,20 +43,19 @@ const Registration = async (req, res) => {
 
 // ----------------------------------------------------------------------
 
-const Login = async (req, res) => {
+export const Login = async (req, res) => {
   try {
     const { userName = '', password = '' } = req.body;
 
-    checkStringDatas({
-      error: errorCodes.controllers.authorization.login.noData,
-      props: [userName, password],
-    });
-    validationDatas({
-      error: errorCodes.controllers.authorization.login.invalidData,
-      props: [
-        [userName, regex.userName],
-        [password, regex.password],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.authorization.login.noData,
+      errorValid: errorCodes.controllers.authorization.login.invalidData,
+      data: {
+        string: [
+          [userName, regex.userName],
+          [password, regex.password],
+        ],
+      }
     });
 
     const user = await userServices.findUser({userName});
@@ -89,14 +87,13 @@ const Login = async (req, res) => {
 
 // ----------------------------------------------------------------------
 
-const Refresh = async (req, res) => {
+export const Refresh = async (req, res) => {
   try {
     const { refreshToken = '' } = req.body;
 
-    checkStringDatas({
-      error: errorCodes.controllers.authorization.refresh.noData,
-      props: [refreshToken],
-    });
+    if (!refreshToken.trim()) {
+      throw (errorCodes.controllers.authorization.refresh.noData);
+    }
 
     const decoded = jwt.verify(refreshToken, jwtConfig.refresh.key);
     if (decoded.type !== jwtConfig.refresh.type) throw (errorCodes.controllers.authorization.refresh.invalidTokenType);
@@ -121,20 +118,19 @@ const Refresh = async (req, res) => {
 
 // ----------------------------------------------------------------------
 
-const Logout = async (req, res) => {
+export const Logout = async (req, res) => {
   try {
     const {userId, refreshId} = req.middlewareAccessToken;
 
-    checkStringDatas({
-      error: errorCodes.controllers.authorization.logout.noData,
-      props: [userId, refreshId],
-    });
-    validationDatas({
-      error: errorCodes.controllers.authorization.logout.invalidData,
-      props: [
-        [userId, regex.mongoId],
-        [refreshId, regex.mongoId],
-      ],
+    checkAndValidation({
+      errorCheck: errorCodes.controllers.authorization.logout.noData,
+      errorValid: errorCodes.controllers.authorization.logout.invalidData,
+      data: {
+        string: [
+          [userId, regex.mongoId],
+          [refreshId, regex.mongoId],
+        ],
+      }
     });
 
     const user = await userServices.deleteToken(userId, refreshId);
@@ -147,9 +143,18 @@ const Logout = async (req, res) => {
 
 // ----------------------------------------------------------------------
 
-export {
-  Registration,
-  Login,
-  Refresh,
-  Logout,
+export const MyAccount = async (req, res) => {
+  try {
+    const {userId} = req.middlewareAccessToken;
+    const user = await userServices.findUserById(userId);
+
+    res.status(200).json({
+      userName: user.userName,
+    });
+
+  } catch (e) {
+    authErrors(e, res, 'MyAccount');
+  }
 }
+
+// ----------------------------------------------------------------------

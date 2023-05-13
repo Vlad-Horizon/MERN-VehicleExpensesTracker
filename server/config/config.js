@@ -4,7 +4,7 @@ dotenv.config();
 export const port = process.env.SERVER_PORT || 3000;
 export const connectWithRetryTime = 10000;
 
-export const mongoURL = process.env.DB_URL;
+export const mongoURL = process.env.DB_URL || '';
 
 export const folderToSaveImg = 'images';
 export const pathToServer = 'D:/db/MyProjects/businessManagementSystem/server';
@@ -13,6 +13,7 @@ export const regex = {
   userName: /^[A-Z][a-z]+$/,
   password: /^.{1,30}$/,
   mongoId: /^[a-z0-9]{24}$/,
+  getFileType: /(?<=\.)\w+$/,
   
   car: {
     brend: /^[A-Za-z0-9А-Яа-я -]+$/,

@@ -1,17 +1,16 @@
 class CarResponses {
   createCar(props) {
-    const {_id} = props;
-
-    if (_id) {
-      return {message: 'car is created'};
+    if (props._id) {
+      return { message: 'car is created' };
     }
-    return {message: 'error create car'};
+    return { message: 'error create car' };
   }
 
-  getCarById(props, images) {
-    const {_id, userId, brend, model, year, number, price, costs} = props;
+  getAllCars(props) {
+    if (props.length === 0) return [];
 
-    if (costs.length === 0) {
+    return props.map((item) => {
+      const { _id, userId, brend, model, year, number, price, costs, image } = item;
       return {
         id: _id,
         userId: userId,
@@ -20,11 +19,17 @@ class CarResponses {
         year: year,
         number: number,
         price: price,
-        sum: 0,
-        costs: costs,
-        images: images,
-      }
-    }
+        sum: costs.reduce((acc, item) => acc + +price, 0),
+        image: image,
+      };
+    });
+  }
+
+  getCarById(props, images) {
+    if (!props) return [];
+    if (props.length === 0) return [];
+
+    const { _id, userId, brend, model, year, number, price, costs } = props;
 
     return {
       id: _id,
@@ -43,41 +48,21 @@ class CarResponses {
           date: item.date,
           number: item.number,
           price: item.price,
-        }
+        };
       }),
       images: images,
-    }
+    };
   }
 
-  getAllCars(props) {
-    return (props.map((item) => {
-      const {_id, userId, brend, model, year, number, price, costs, image} = item;
-      return {
-        id: _id,
-        userId: userId,
-        brend: brend,
-        model: model,
-        year: year,
-        number: number,
-        price: price,
-        sum: costs.reduce((acc, item) => acc + +price, 0),
-        image: image,
-      }
-    }))
-  }
-
-  editCar(props) {
-    if (props.modifiedCount > 0) {
-      return {message: 'car is edit'};
-    }
-    return {message: 'car is not edit'};
+  editCar() {
+    return { message: 'car is edit' };
   }
 
   deleteCar(props) {
     if (props.deletedCount > 0) {
-      return {message: 'car is deleted'};
+      return { message: 'car is deleted' };
     }
-    return {message: 'car is not deleted'};
+    return { message: 'car is not deleted' };
   }
 }
 

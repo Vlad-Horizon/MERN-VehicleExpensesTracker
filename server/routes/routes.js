@@ -1,9 +1,9 @@
-import {Router} from 'express';
+import { Router } from 'express';
 const router = Router();
 
-import {Login, Registration, Refresh, Logout, MyAccount} from '../controllers/auth.js';
-import {CreateCar, GetAllCar, GetCarById, DeleteCar, EditCar} from '../controllers/car.js';
-import {AddCost, GetAllCarCosts, EditCarCost, DeleteCarCost} from '../controllers/costsCar.js';
+import { Login, Registration, Refresh, Logout, MyAccount } from '../controllers/authController.js';
+import { CreateCar, GetAllCar, GetCarById, DeleteCar, EditCar } from '../controllers/carController.js';
+import { AddCost, GetAllCarCosts, EditCarCost, DeleteCarCost } from '../controllers/carCostController.js';
 
 import authMiddleware from '../middleware/auth.js';
 

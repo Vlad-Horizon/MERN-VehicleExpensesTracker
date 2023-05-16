@@ -1,0 +1,91 @@
+.tableBodyMainContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+
+  .tableBodyContainer {
+    width: 100%;
+    min-height: 500px;
+    overflow-x: scroll;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0px;
+  
+      thead {
+  
+        tr {
+  
+          th {
+            min-width: 80px;
+            padding: 10px;
+            border-bottom: 1px solid rgba(145, 158, 171, 0.24);
+            user-select: text;
+  
+            .thButton {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              user-select: text;
+  
+              .innerThButton {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px;
+                font-size: 14px;
+                cursor: pointer;
+                user-select: text;
+                
+                .thButtonText {
+                  margin-right: 5px;
+                  user-select: text;
+                }
+                .thButtonText_Active {
+                  color: rgb(59, 181, 106);
+                }
+        
+                .svgContainer {
+                  width: 20px;
+                  height: 20px;
+                  user-select: text;
+                }
+                .svgContainer_Active {
+                  color: rgb(59, 181, 106);
+                }
+              }
+            }
+          }
+        }
+      }
+  
+      tbody {  
+        tr {  
+          td {
+            min-width: 80px;
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(145, 158, 171, 0.24);
+            user-select: text;
+          }
+        }
+      }
+  
+      thead,
+      tbody {
+        tr {
+          .w100{width: 100px;}
+          .w150{width: 150px;}
+          .w200{width: 200px;}
+          .w250{width: 250px;}
+          .w300{width: 300px;}
+
+          .textRight{text-align: right;}
+          .textCenter{text-align: center;}
+          .textLeft{text-align: left;}
+        }
+      }
+    }
+  }
+}

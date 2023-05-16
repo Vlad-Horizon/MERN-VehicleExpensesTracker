@@ -1,0 +1,23 @@
+.header {
+  grid-area: header;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+
+  .innerHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    .buttonContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 40px);
+      grid-template-rows: 1fr;
+      justify-content: end;
+      gap: 5px;
+      width: 150px;
+    }
+  }
+}

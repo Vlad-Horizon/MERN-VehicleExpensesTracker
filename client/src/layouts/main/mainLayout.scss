@@ -1,0 +1,68 @@
+// Variables
+$sidebarSize: 0px; //280px
+
+.mainLayout {
+  display: grid;
+  grid-template-columns: $sidebarSize 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar content";
+  width: 100%;
+  height: 100%;
+  background-color: rgb(32, 38, 46);
+
+  .sidebar {
+    grid-area: sidebar;
+    width: 100%;
+    height: 100%;
+    padding: 5px 0 5px 10px;
+
+    .innerSidebar {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .content {
+    grid-area: content;
+    width: 100%;
+    height: calc(100vh - 60px);
+    padding: 5px;
+
+    .innerContent {
+      width: 100%;
+      height: 100%;
+      padding: 5px;
+      background-color: rgb(22, 28, 36);
+      border-radius: 16px;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      
+      .contentContainer {
+        width: 100%;
+        height: 100%;
+        border-radius: 16px;
+        overflow-y: scroll;
+      }
+    }
+  }
+}
+
+// 
+
+@media all and (max-width: 1000px) {
+  $sidebarSize: 0px; //80px
+
+  .mainLayout {
+    grid-template-columns: $sidebarSize 1fr;
+  }
+}
+
+@media all and (max-width: 700px) {
+  $sidebarSize: 0px;
+
+  .mainLayout {
+    grid-template-columns: $sidebarSize 1fr;
+  }
+}

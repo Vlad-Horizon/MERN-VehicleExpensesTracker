@@ -1,0 +1,68 @@
+.carCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  width: 100%;
+  // min-height: 100%;
+
+  .carCard {
+    border-radius: 16px;
+    background-color: rgb(33, 43, 54);
+    color: rgb(255, 255, 255);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 8px 0px;
+  
+    .carImage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 200px;
+      padding: 5px;
+      
+      img {
+        height: 100%;
+        width: auto;
+        object-fit: cover;
+        border-radius: 16px;
+      }
+    }
+  
+    .carInfo {
+      padding: 5px 10px;
+  
+      .carName {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 30px;
+        margin-bottom: 5px;
+      }
+  
+      .purchasePrice {
+        grid-area: purchasePrice;
+        font-size: 14px;
+  
+        span {
+          padding-left: 3px;
+          color: rgb(255, 86, 48);
+        }
+      }
+  
+      .costs {
+        grid-area: costs;
+        font-size: 14px;
+        
+        span {
+          padding-left: 3px;
+          color: rgb(255, 86, 48);
+        }
+      }
+    }
+  
+    .carButtons {
+      padding: 8px;
+    }
+  }
+}

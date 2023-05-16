@@ -1,0 +1,142 @@
+.carMainInfo {
+  display: flex;
+  width: 100%;
+  height: 500px;
+
+  .carImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    max-height: 500px;
+    min-height: 250px;
+    padding: 15px;
+  }
+
+  .carInfo {
+    padding: 30px 10px 10px;
+
+    .carName {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .CarNumber {
+      display: flex;
+      margin-bottom: 15px;
+
+      .numberContainer {
+        display: flex;
+        min-width: 200px;
+        height: 35px;
+        border: 2px solid #000;
+        border-radius: 4px;
+        overflow: hidden;
+
+        .cauntry {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 25px;
+          height: 100%;
+          background-color: #003399;
+
+          .flag {
+            display: grid;
+            grid-template-columns: 18px;
+            grid-template-rows: repeat(2 5px);
+            width: 18px;
+            height: 10px;
+            margin-top: 3px;
+
+            .blue {
+              background-color: #005BBB;
+            }
+
+            .yelow {
+              background-color: #FFD500;
+            }
+          }
+
+          .ua {
+            margin-top: 2px;
+            font-size: 10px;
+          }
+        }
+
+        .field {
+          display: flex;
+          align-items: center;
+          width: calc(100% - 25px);
+          height: 100%;
+          background-color: #fff;
+          user-select: text;
+
+          span {
+            padding: 0 3px;
+            font-size: 30px;
+            font-weight: 700;
+            font-family: 'Rubik', sans-serif;
+            color: #000;
+            user-select: text;
+          }
+        }
+      }
+    }
+
+    .purchasePrice {
+      font-size: 16px;
+      margin-top: 10px;
+      user-select: text;
+
+      span {
+        padding-left: 3px;
+        color: rgb(255, 86, 48);
+        user-select: text;
+      }
+    }
+
+    .costs {
+      font-size: 16px;
+      user-select: text;
+
+      span {
+        padding-left: 3px;
+        color: rgb(255, 86, 48);
+        user-select: text;
+      }
+    }
+  }
+}
+
+.lineButtonsContainer {
+  width: 100%;
+}
+
+// .rc-scrollbars-container {
+//   .rc-scrollbars-view {
+//     scrollbar-width: none;
+
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+//   }
+// }
+
+// 
+
+@media all and (max-width: 700px) {
+  .carMainInfo {
+    flex-direction: column;
+  }
+}
+
+.contentPanel {
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+
+  .buttonContainer {
+    width: 100px;
+  }
+}

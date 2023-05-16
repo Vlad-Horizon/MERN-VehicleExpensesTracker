@@ -1,4 +1,3 @@
-// var
 import { regex } from '../config/config.js';
 import { errorController } from '../error/errorController.js';
 import { validation } from '../validations/validation.js';

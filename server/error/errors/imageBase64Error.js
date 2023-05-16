@@ -3,7 +3,7 @@ import { imageBase64ErrorsMessages } from '../../utils/imageBase64.js';
 
 // ----------------------------------------------------------------------
 
-export const useFileSystemError = ({ controllerName, error, res }) => {
+export const imageBase64Error = ({ controllerName, error, res }) => {
   const errorMessages = imageBase64ErrorsMessages;
 
   if (error.message === errorMessages.errorConvertToBase64) {

@@ -9,8 +9,8 @@
     "dev": "nodemon server.js",
     "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Vlad-Horizon",
+  "license": "Apache License 2.0",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
@@ -32,6 +32,7 @@
     "@babel/core": "^7.21.8",
     "@babel/plugin-transform-modules-commonjs": "^7.21.5",
     "@babel/preset-env": "^7.21.5",
+    "@shelf/jest-mongodb": "^4.1.7",
     "babel-jest": "^29.5.0",
     "mock-req-res": "^1.2.1",
     "supertest": "^6.3.3"

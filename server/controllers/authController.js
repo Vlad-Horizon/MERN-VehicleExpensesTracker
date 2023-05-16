@@ -1,8 +1,5 @@
-// Moduls
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-
-// var
 import { jwtConfig, regex } from '../config/config.js';
 import { errorController } from '../error/errorController.js';
 import { validation } from '../validations/validation.js';

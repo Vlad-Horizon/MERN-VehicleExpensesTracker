@@ -7,8 +7,8 @@ import GuestGuard from '../auth/guards/GuestGuard';
 import AccessGuard from '../auth/guards/AccessGuard';
 
 // layouts
-// import CompactLayout from '../layouts/authForms';
-import MainLayout from '../layouts/main';
+import AuthLayout from '../layouts/authLayout/AuthLayout';
+import MainLayout from '../layouts/main/MainLayout';
 
 // config
 import { PATH_AFTER_LOGIN } from '../config';
@@ -20,40 +20,55 @@ import { Loading } from '../components';
 
 // ----------------------------------------------------------------------
 
-const Loadable = (Component: any) => ({ claims, ...props }: any) => {
-
-  return (
-    <Suspense fallback={ <Loading /> }>
-      <AccessGuard claims={claims}>
-        <Component {...props} />
-      </AccessGuard>
-    </Suspense>
-  );
-};
+const Loadable =
+  (Component: any) =>
+  ({ claims, ...props }: any) => {
+    return (
+      <Suspense fallback={<Loading />}>
+        <AccessGuard claims={claims}>
+          <Component {...props} />
+        </AccessGuard>
+      </Suspense>
+    );
+  };
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
     // Auth
-    // {
-    //   path: 'auth',
-    //   element: (<CompactLayout />),
-    //   children: [
-    //     {path: 'login', element: (<GuestGuard><LoginPage /></GuestGuard>)},
-    //     {path: 'register', element: (<GuestGuard><RegisterPage /></GuestGuard>)},
-    //     {path: 'reset-password', element: <ResetPasswordPage />},
-    //   ],
-    // },
+    {
+      path: 'auth',
+      element: <AuthLayout />,
+      children: [
+        {
+          path: 'login',
+          element: (
+            <GuestGuard>
+              <LoginPage />
+            </GuestGuard>
+          ),
+        },
+        // {
+        //   path: 'register',
+        //   element: (
+        //     <GuestGuard>
+        //       <RegisterPage />
+        //     </GuestGuard>
+        //   ),
+        // },
+        // { path: 'reset-password', element: <ResetPasswordPage /> },
+      ],
+    },
 
     // Car
     {
       path: 'Car',
-      element: (<MainLayout/>),
+      element: <MainLayout />,
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'List', element: <CarList /> },
-        { path: 'Details', element: <CarDetails /> },
+        { path: 'Details/:carId', element: <CarDetails /> },
         { path: 'Add', element: <AddCar /> },
       ],
     },
@@ -91,7 +106,7 @@ export default function Router() {
 // ----------------------------------------------------------------------
 
 // AUTH
-// const LoginPage = Loadable(lazy(() => import('../pages/auth/login/Login')));
+const LoginPage = Loadable(lazy(() => import('../pages/authPages/LoginPage')));
 // const RegisterPage = Loadable(lazy(() => import('../pages/auth/register/Registration')));
 // // const VerifyCodePage = Loadable(lazy(() => import('../pages/auth/VerifyCodePage')));
 // // const NewPasswordPage = Loadable(lazy(() => import('../pages/auth/NewPasswordPage')));

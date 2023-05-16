@@ -21,69 +21,6 @@
       margin-bottom: 10px;
     }
 
-    .CarNumber {
-      display: flex;
-      margin-bottom: 15px;
-
-      .numberContainer {
-        display: flex;
-        min-width: 200px;
-        height: 35px;
-        border: 2px solid #000;
-        border-radius: 4px;
-        overflow: hidden;
-
-        .cauntry {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 25px;
-          height: 100%;
-          background-color: #003399;
-
-          .flag {
-            display: grid;
-            grid-template-columns: 18px;
-            grid-template-rows: repeat(2 5px);
-            width: 18px;
-            height: 10px;
-            margin-top: 3px;
-
-            .blue {
-              background-color: #005BBB;
-            }
-
-            .yelow {
-              background-color: #FFD500;
-            }
-          }
-
-          .ua {
-            margin-top: 2px;
-            font-size: 10px;
-          }
-        }
-
-        .field {
-          display: flex;
-          align-items: center;
-          width: calc(100% - 25px);
-          height: 100%;
-          background-color: #fff;
-          user-select: text;
-
-          span {
-            padding: 0 3px;
-            font-size: 30px;
-            font-weight: 700;
-            font-family: 'Rubik', sans-serif;
-            color: #000;
-            user-select: text;
-          }
-        }
-      }
-    }
-
     .purchasePrice {
       font-size: 16px;
       margin-top: 10px;
@@ -123,7 +60,7 @@
 //   }
 // }
 
-// 
+//
 
 @media all and (max-width: 700px) {
   .carMainInfo {

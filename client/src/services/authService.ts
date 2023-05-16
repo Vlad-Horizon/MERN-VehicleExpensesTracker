@@ -102,7 +102,7 @@ class AuthService {
   };
 
   getCurrentUser = () => new Promise<any>((resolve, reject) => {
-    axios.get(`${ API }/my-account`)
+    axios.get(`${ API }/myAccount`)
       .then((response: any) => {
         if (response.data) {
           const {data} = response;

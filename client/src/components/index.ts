@@ -9,6 +9,7 @@ export { default as LineButtons} from './lineButtons/LineButtons';
 // Car
 export { default as CarCardsContainer} from './carCard/CarCardsContainer';
 export { default as CarCard} from './carCard/CarCard';
+export { default as CarNumber} from './carNumber/CarNumber';
 
 // table
 export { default as TableContainer} from './table/TableContainer';

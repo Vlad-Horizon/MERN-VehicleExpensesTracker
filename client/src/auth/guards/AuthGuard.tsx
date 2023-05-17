@@ -3,33 +3,37 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 // hooks
 import { useSelector } from 'react-redux';
-import { Loading } from '../../components';
 // import { useAuthContext } from '../useAuthContext';
 
+// components
+import LoadingScreen from '../../components/loading/Loading';
+
 // pages
-// import Login from '../../pages/auth/login/Login';
+import LoginPage from '../../pages/authPages/LoginPage';
 
 // ----------------------------------------------------------------------
 
 interface AuthGuardProps {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }
 
 export default function AuthGuard({ children }: AuthGuardProps) {
-  const { user, isLoading } = useSelector((state: any) => state.user )
+  const { user, isLoading } = useSelector((state: any) => state.user);
   // const { isAuthenticated, isInitialized } = useAuthContext();
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
 
-  if (isLoading) { // !isInitialized
-    return <Loading />;
+  if (isLoading) {
+    // !isInitialized
+    return <LoadingScreen />;
   }
 
-  if (!user || !Object.keys(user).length) { // !isAuthenticated
+  if (!user || !Object.keys(user).length) {
+    // !isAuthenticated
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
-    // return <Login />;
+    return <LoginPage />;
   }
 
   if (requestedLocation && pathname !== requestedLocation) {

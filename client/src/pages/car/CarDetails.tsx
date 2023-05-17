@@ -283,19 +283,12 @@ export default function CarDetails() {
 
       <div className="carMainInfo">
         <div className="carImage">
-          <Galery
-            src={[
-              'https://vag.ua/wp-content/uploads/2021/12/%D0%A4%D0%BE%D1%82%D0%BE-1.jpg',
-              'https://nextcar.ua/images/companies/1/audi-etron-gt-official/audi-e-tron-gt.jpg?1612941904950',
-              'https://olmaks.ua/wp-content/uploads/2021/03/audi-e-tron_gt_quattro-rul.jpg',
-            ]}
-            defaultImg={NoPhoto}
-          />
+          <Galery src={carDetails && carDetails.images.length > 0 ? carDetails.images : null} defaultImg={NoPhoto} />
         </div>
 
         <div className="carInfo">
           <div className="carName">
-            <span>{`${carDetails && carDetails.brend}`}</span>
+            <span>{carDetails ? `${carDetails.brend} ${carDetails.model}` : ''}</span>
           </div>
           <CarNumber number={carDetails && carDetails.number} />
           <Hr />

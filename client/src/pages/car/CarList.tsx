@@ -9,7 +9,7 @@ import carApi from '../../services/driveApi';
 
 interface carsListParams {
   id: string;
-  img: string;
+  image: string;
   brend: string;
   model: string;
   year: string;
@@ -36,13 +36,13 @@ export default function CarList() {
 
       <CarCardsContainer>
         {carsList.map((item, i) => {
-          const { id, img, brend, model, year, price } = item;
+          const { id, image, brend, model, year, price } = item;
 
           return (
             <CarCard
               key={`${brend}${model}${year}${i}`}
               id={id}
-              img={img}
+              image={image}
               brend={brend}
               model={model}
               year={year}

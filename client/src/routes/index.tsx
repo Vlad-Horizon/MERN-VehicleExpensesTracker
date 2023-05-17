@@ -64,7 +64,11 @@ export default function Router() {
     // Car
     {
       path: 'Car',
-      element: <MainLayout />,
+      element: (
+        <AuthGuard>
+          <MainLayout />
+        </AuthGuard>
+      ),
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'List', element: <CarList /> },

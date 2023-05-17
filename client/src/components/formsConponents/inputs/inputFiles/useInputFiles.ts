@@ -50,7 +50,7 @@ export function useInputFiles({name, label, required = false, submit, accept = '
   }, [files, submit, required, pattern, accept])
 
   const validation = () => {
-    setValid(false);
+    // setValid(false);
 
     if (submit) {
       if (!files && required) {

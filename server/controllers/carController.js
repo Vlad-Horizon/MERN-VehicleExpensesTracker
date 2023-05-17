@@ -20,7 +20,7 @@ export const CreateCar = async (req, res) => {
         [year, regex.car.year],
         [number, regex.car.number],
       ],
-      number: [[price, price > 0]],
+      price: [[price, price > 0]],
     });
 
     const newCar = await carServices.createCar({

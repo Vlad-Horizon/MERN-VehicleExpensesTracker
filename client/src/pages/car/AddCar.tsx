@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DefaultButton, Galery, InputFiles, InputText, Popup, PopupGalery, ScrollHorizontel } from '../../components';
 import { useForm, useInputText, useInputFiles } from '../../hooks';
 
@@ -8,8 +8,25 @@ import './carAdd.scss';
 import { CAR_PAGE } from '../../routes/paths';
 import PopupConvertKeyboard from '../../components/popup/PopupConvertKeyboard';
 import carApi from '../../services/driveApi';
+import { useParams } from 'react-router-dom';
+import { createUrlToFile } from '../../utils/createUrlToFile';
+import { base64DecodeFile } from '../../utils/base64DecodeFile';
 
-export default function CarList() {
+interface CarListInterface {
+  isEdit?: boolean;
+}
+
+interface carToEdit {
+  images: string[];
+  brend: string;
+  model: string;
+  year: string;
+  number: string;
+  price: number;
+}
+
+export default function CarList({ isEdit = false }: CarListInterface) {
+  const { carId } = useParams();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [convertKeyboardStatys, setConvertKeyboardStatys] = useState<boolean>(false);
   const [editFiles, setEditFiles] = useState<boolean>(false);
@@ -67,10 +84,49 @@ export default function CarList() {
     inputs: [carIMG.valid, carBrend.valid, carModel.valid, carYear.valid, carNumber.valid, carPrice.valid],
   });
 
+  const getCarById = async () => {
+    if (!isEdit || !carId) return;
+    const car = await carApi.getCarById(carId);
+
+    if (!car) return;
+    const { images, brend, model, year, number, price } = car;
+
+    carBrend.setValue(brend);
+    carModel.setValue(model);
+    carYear.setValue(year);
+    carNumber.setValue(number);
+    carPrice.setValue(price);
+    carIMG.setFilesSorted(
+      images.map((image: string) => {
+        return {
+          file: base64DecodeFile(image),
+          base64: image,
+          url: createUrlToFile(base64DecodeFile(image)),
+        };
+      })
+    );
+  };
+
+  useEffect(() => {
+    getCarById();
+  }, []);
+
   const submit = () => {
     setIsSubmit(true);
     if (!form.valid) return;
 
+    if (isEdit && carId) {
+      carApi.editCar({
+        carId: carId,
+        images: carIMG.files.map((file) => file.base64),
+        brend: carBrend.value,
+        model: carModel.value,
+        year: carYear.value,
+        number: carNumber.value,
+        price: +carPrice.value,
+      });
+      return;
+    }
     carApi.createCar({
       images: carIMG.files.map((file) => file.base64),
       brend: carBrend.value,

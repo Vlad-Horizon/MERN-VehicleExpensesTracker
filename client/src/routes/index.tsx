@@ -74,6 +74,7 @@ export default function Router() {
         { path: 'List', element: <CarList /> },
         { path: 'Details/:carId', element: <CarDetails /> },
         { path: 'Add', element: <AddCar /> },
+        { path: 'Edit/:carId', element: <AddCar isEdit /> },
       ],
     },
 

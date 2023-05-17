@@ -34,4 +34,5 @@ export const CAR_PAGE = {
   list: path(ROOTS_CAR, '/List'),
   details: path(ROOTS_CAR, '/Details'),
   add: path(ROOTS_CAR, '/Add'),
+  edit: path(ROOTS_CAR, '/Edit'),
 };

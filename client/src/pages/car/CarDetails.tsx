@@ -280,6 +280,7 @@ export default function CarDetails() {
   return (
     <>
       <DefaultButton text="Close" border to={CAR_PAGE.list} style={{ marginRight: '5px' }} />
+      <DefaultButton text="Edit" border to={`${CAR_PAGE.edit}/${carId}`} style={{ marginRight: '5px' }} />
 
       <div className="carMainInfo">
         <div className="carImage">

@@ -31,7 +31,7 @@ class CarCostResponses {
   }
 
   deleteCarCost(props) {
-    if (props.deletedCount > 0) {
+    if (props.modifiedCount > 0) {
       return { message: 'car cost is deleted' };
     }
     return { message: 'car cost is not deleted' };

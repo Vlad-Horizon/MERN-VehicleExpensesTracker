@@ -14,7 +14,7 @@ import MainLayout from '../layouts/main/MainLayout';
 import { PATH_AFTER_LOGIN } from '../config';
 
 // consts
-import { PAGE_NAMES } from '../constants/constants';
+import { PAGE_NAMES } from '../config/config';
 import { CAR_PAGE } from './paths';
 import { Loading } from '../components';
 

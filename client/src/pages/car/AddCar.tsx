@@ -7,7 +7,8 @@ import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
 import './carAdd.scss';
 import { CAR_PAGE } from '../../routes/paths';
 import PopupConvertKeyboard from '../../components/popup/PopupConvertKeyboard';
-import carApi from '../../services/driveApi';
+import MinImg from '../../components/galery/MinImg';
+import carApi from '../../services/carApi';
 import { useParams } from 'react-router-dom';
 import { createUrlToFile } from '../../utils/createUrlToFile';
 import { base64DecodeFile } from '../../utils/base64DecodeFile';
@@ -137,6 +138,11 @@ export default function CarList({ isEdit = false }: CarListInterface) {
     });
   };
 
+  const deleteCar = async () => {
+    if (!isEdit || !carId) return;
+    await carApi.deleteCar(carId);
+  };
+
   return (
     <>
       <div className="contentPanel">
@@ -145,6 +151,15 @@ export default function CarList({ isEdit = false }: CarListInterface) {
           bg
           events={{
             onClick: () => setConvertKeyboardStatys(true),
+          }}
+          style={{ marginRight: '5px' }}
+        />
+
+        <DefaultButton
+          text="Delete car"
+          bg
+          events={{
+            onClick: () => deleteCar(),
           }}
           style={{ marginRight: '5px' }}
         />

@@ -19,7 +19,17 @@ import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
 import './carDetails.scss';
 import { useInputText } from '../../hooks';
 import { CAR_PAGE } from '../../routes/paths';
-import carApi from '../../services/driveApi';
+import carApi from '../../services/carApi';
+import costApi from '../../services/carCostApi';
+
+interface carCostInterface {
+  carId: string;
+  name: string;
+  category: string;
+  date: string;
+  number: number;
+  price: number;
+}
 
 const thContent = [
   { title: 'Назва', sortName: 'name', className: 'w250 textLeft' },
@@ -94,10 +104,10 @@ export default function CarDetails() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('up');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [addCostsPopup, setAddCostsPopup] = useState<boolean>(false);
-  //
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [costId, setCostId] = useState<number | null>(null);
+  const [costId, setCostId] = useState<string | null>(null);
+
   const addName = useInputText({
     name: 'addName',
     label: 'Name',
@@ -138,15 +148,6 @@ export default function CarDetails() {
     required: true,
     submit: isSubmit,
   });
-  const addSum = useInputText({
-    name: 'addSum',
-    label: 'Sum',
-    inputValue: '',
-    reg: /^[0-9]+$/,
-    required: true,
-    submit: isSubmit,
-  });
-
   const closePopup = () => {
     if (isEdit) {
       setCostId(null);
@@ -157,55 +158,42 @@ export default function CarDetails() {
       addDete.reset();
       addPrice.reset();
       addNumber.reset();
-      addSum.reset();
     }
 
     setAddCostsPopup(false);
   };
 
-  // const submitAddCosts = () => {
-  //   setIsSubmit(true);
+  const submitAddCosts = async () => {
+    setIsSubmit(true);
 
-  //   if (!addName.valid || !addCategory.valid || !addDete.valid || !addPrice.valid || !addNumber.valid || !addSum.valid)
-  //     return;
+    if (!addName.valid || !addCategory.valid || !addDete.valid || !addPrice.valid || !addNumber.valid) return;
 
-  //   if (isEdit) {
-  //     setTbContent((prevState) =>
-  //       prevState.map((obj) => {
-  //         if (obj.id === costId) {
-  //           return {
-  //             id: obj.id,
-  //             name: addName.value,
-  //             category: addCategory.value,
-  //             date: addDete.value,
-  //             price: +addPrice.value,
-  //             number: +addNumber.value,
-  //             sum: +addSum.value,
-  //           };
-  //         }
-  //         return obj;
-  //       })
-  //     );
+    if (isEdit) {
+      await costApi.editCost({
+        carId: carId,
+        costId: costId,
+        name: addName.value,
+        category: addCategory.value,
+        date: addDete.value,
+        price: +addPrice.value,
+        number: +addNumber.value,
+      });
 
-  //     clearAddCostsInputs();
-  //     return;
-  //   }
+      clearAddCostsInputs();
+      return;
+    }
 
-  //   setTbContent([
-  //     ...tbContent,
-  //     {
-  //       id: tbContent.length,
-  //       name: addName.value,
-  //       category: addCategory.value,
-  //       date: addDete.value,
-  //       price: +addPrice.value,
-  //       number: +addNumber.value,
-  //       sum: +addSum.value,
-  //     },
-  //   ]);
+    await costApi.addCost({
+      carId: carId,
+      name: addName.value,
+      category: addCategory.value,
+      date: addDete.value,
+      price: +addPrice.value,
+      number: +addNumber.value,
+    });
 
-  //   clearAddCostsInputs();
-  // };
+    clearAddCostsInputs();
+  };
 
   const [carDetails, setCarDetails] = useState<carDetailsProps>();
 
@@ -225,7 +213,6 @@ export default function CarDetails() {
     addDete.reset();
     addPrice.reset();
     addNumber.reset();
-    addSum.reset();
 
     setIsSubmit(false);
     setAddCostsPopup(false);
@@ -259,22 +246,24 @@ export default function CarDetails() {
     return;
   });
 
-  const deleteRowInTable = (id: number) => {
-    // setTbContent(tbContent.filter((item) => item.id !== id));
+  const deleteRowInTable = async (id: string) => {
+    if (!carId) return;
+    costApi.deleteCost({ carId: carId, costId: id });
   };
 
-  const editRowInTable = (id: number) => {
-    // const toEdit = tbContent.find((item) => item.id === id);
-    // if (toEdit === undefined) return;
-    // setCostId(id);
-    // addName.setValue(toEdit.name);
-    // addCategory.setValue(toEdit.category);
-    // addDete.setValue(toEdit.date);
-    // addPrice.setValue(toEdit.price.toString());
-    // addNumber.setValue(toEdit.number.toString());
-    // addSum.setValue(toEdit.sum.toString());
-    // setAddCostsPopup(true);
-    // setIsEdit(true);
+  const editRowInTable = (id: string) => {
+    if (!carDetails) return;
+
+    const toEdit = carDetails.costs.find((item) => item.id === id);
+    if (toEdit === undefined) return;
+    setCostId(id);
+    addName.setValue(toEdit.name);
+    addCategory.setValue(toEdit.category);
+    addDete.setValue(toEdit.date);
+    addPrice.setValue(toEdit.price.toString());
+    addNumber.setValue(toEdit.number.toString());
+    setAddCostsPopup(true);
+    setIsEdit(true);
   };
 
   return (
@@ -329,7 +318,7 @@ export default function CarDetails() {
             closePopup();
           }}
           submit={() => {
-            // submitAddCosts();
+            submitAddCosts();
           }}
         >
           <InputText
@@ -384,17 +373,6 @@ export default function CarDetails() {
             errorText={addNumber.errorText}
             events={{
               onChange: addNumber.onChange,
-            }}
-          />
-
-          <InputText
-            name={addSum.name}
-            value={addSum.value}
-            viewName={addSum.label}
-            error={addSum.error}
-            errorText={addSum.errorText}
-            events={{
-              onChange: addSum.onChange,
             }}
           />
         </Popup>

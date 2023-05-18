@@ -5,7 +5,7 @@ import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
 
 import './carDetails.scss';
 import { CAR_PAGE } from '../../routes/paths';
-import carApi from '../../services/driveApi';
+import carApi from '../../services/carApi';
 
 interface carsListParams {
   id: string;

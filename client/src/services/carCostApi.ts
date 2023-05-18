@@ -1,10 +1,15 @@
 import { AxiosResponse } from 'axios';
 import  axios, {uninterceptedAxiosInstance } from '../utils/axios';
-import { API } from '../constants/constants';
+import { API } from '../config/config';
 
-class CarApi {
-  getAllCars = () => new Promise<any>((resolve, reject) => {
-    axios.get(`${ API }/GetAllCar`)
+interface deleteCost {
+  carId: string,
+  costId: string,
+}
+
+class CostApi {
+  addCost = (data: any) => new Promise<any>((resolve, reject) => {
+    axios.post(`${ API }/addCost`, data)
       .then((response: any) => {
         if (response.data) {
           resolve(response.data);
@@ -17,8 +22,8 @@ class CarApi {
       });
   })
 
-  getCarById = (carId: string) => new Promise<any>((resolve, reject) => {
-    axios.get(`${ API }/GetCarById/${carId}`)
+  editCost = (data: any) => new Promise<any>((resolve, reject) => {
+    axios.put(`${ API }/editCarCost`, data)
       .then((response: any) => {
         if (response.data) {
           resolve(response.data);
@@ -31,22 +36,8 @@ class CarApi {
       });
   })
 
-  createCar = (data: any) => new Promise<any>((resolve, reject) => {
-    axios.post(`${ API }/createCar`, data)
-      .then((response: any) => {
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  })
-
-  editCar = (data: any) => new Promise<any>((resolve, reject) => {
-    axios.put(`${ API }/editCar`, data)
+  deleteCost = (data: any) => new Promise<any>((resolve, reject) => {   
+    axios.delete(`${ API }/deleteCarCost`, {data})
       .then((response: any) => {
         if (response.data) {
           resolve(response.data);
@@ -59,6 +50,6 @@ class CarApi {
       });
   })
 }
-const carApi = new CarApi();
+const costApi = new CostApi();
 
-export default carApi;
+export default costApi;

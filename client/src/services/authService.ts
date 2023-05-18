@@ -1,6 +1,6 @@
 import axios, { uninterceptedAxiosInstance } from '../utils/axios';
 // @ts-ignore
-import { API } from '../constants/constants';
+import { API } from '../config/config';
 // import {setAccessToken, setPhoneNumber, setRefreshToken, triggerLoader} from '../redux/action';
 import { dispatch, store } from '../redux/store';
 import { triggerLoader } from '../redux/slices/utils';

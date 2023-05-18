@@ -1,6 +1,6 @@
 import axios from 'axios';
 // config
-import { API } from '../constants/constants';
+import { API } from '../config/config';
 import { triggerLoader } from '../redux/slices/utils';
 import { logout } from '../redux/slices/userSlice';
 

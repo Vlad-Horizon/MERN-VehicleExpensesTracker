@@ -2,7 +2,7 @@
 import { DRIVE_PAGE } from '../routes/paths';
 
 // components
-import { PAGE_NAMES } from '../constants/constants';
+import { PAGE_NAMES } from './config';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ const navConfig = [
   // },
   {
     subheader: 'Error pages',
-    claims: [PAGE_NAMES.Drive,],
+    claims: [PAGE_NAMES.Drive],
     items: [
       // {title: '403', path: DRIVE_PAGE.page403, icon: '', claims: [PAGE_NAMES.Drive,],},
       // {title: '404', path: DRIVE_PAGE.page404, icon: '', claims: [PAGE_NAMES.Drive,],},

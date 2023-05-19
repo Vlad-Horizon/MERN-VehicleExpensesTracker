@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CarCard, CarCardsContainer, DefaultButton } from '../../components';
+import { ButtonsHeader, CarCard, CarCardsContainer, DefaultButton, PathToPage } from '../../components';
 
-import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
-
-import './carDetails.scss';
+import './carList.scss';
 import { CAR_PAGE } from '../../routes/paths';
 import carApi from '../../services/carApi';
 
@@ -30,8 +28,12 @@ export default function CarList() {
 
   return (
     <>
-      <div className="contentPanel">
-        <DefaultButton text="Add car" bg to={CAR_PAGE.add} />
+      <div className="pageHeader">
+        <PathToPage props={[['Car list', CAR_PAGE.list]]} />
+
+        <ButtonsHeader>
+          <DefaultButton text="Add car" bg to={CAR_PAGE.add} />
+        </ButtonsHeader>
       </div>
 
       <CarCardsContainer>

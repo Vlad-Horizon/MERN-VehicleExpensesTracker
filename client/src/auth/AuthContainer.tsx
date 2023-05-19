@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react'
+import React, { useEffect, useCallback } from 'react';
 
 // utils
 import { setSession, isValidToken } from './utils';
@@ -7,68 +7,67 @@ import { setSession, isValidToken } from './utils';
 import axios from '../utils/axios';
 
 // reduser
-import {logout} from '../redux/slices/userSlice';
+import { logout } from '../redux/slices/userSlice';
 
 // services
-import authServices from '../services/authService'
+import authServices from '../services/authService';
 import { dispatch, store } from '../redux/store';
-import { getTokens } from '../redux/slices/tokensSlice';
+// import { getTokens } from '../redux/slices/tokensSlice';
 
 // ----------------------------------------------------------------------
 
 interface AuthProps {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }
 
 // ----------------------------------------------------------------------
 
-function AuthContainer({children}: AuthProps) {
+function AuthContainer({ children }: AuthProps) {
   const initialize = useCallback(async () => {
     try {
-      const {tokens} = store.getState()
-      const {accessToken, refreshToken} = tokens.tokens
-      
+      const { tokens } = store.getState();
+      const { accessToken, refreshToken } = tokens.tokens;
+
       if (!accessToken || !refreshToken) {
-        dispatch(logout());        
-        return
+        dispatch(logout());
+        return;
       }
-      
-      const {accessStatys, refreshStatys} = isValidToken({
-        access: accessToken, 
+
+      const { accessStatys, refreshStatys } = isValidToken({
+        access: accessToken,
         refresh: refreshToken,
-      })
+      });
 
       if (!accessStatys && refreshStatys) {
-        const res = await authServices.token(refreshToken)        
+        const res = await authServices.token(refreshToken);
         setSession({
-          access: res.accessToken, 
-          refresh: res.refreshToken
+          access: res.accessToken,
+          refresh: res.refreshToken,
         });
-        return
+        return;
       }
-  
+
       if (accessStatys) {
         setSession({
-          access: accessToken, 
-          refresh: refreshToken
+          access: accessToken,
+          refresh: refreshToken,
         });
-        return
+        return;
       }
 
       dispatch(logout());
-  
     } catch (e) {
       dispatch(logout());
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     initialize();
   }, [initialize]);
 
-  return (<>{children}</>)
+  return <>{children}</>;
 }
 
 // ----------------------------------------------------------------------
 
-export default AuthContainer
+export default AuthContainer;

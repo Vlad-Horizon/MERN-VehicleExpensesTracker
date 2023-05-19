@@ -5,7 +5,6 @@ function path(root: string, sublink: string) {
 }
 
 const ROOTS_AUTH = '/auth';
-const ROOTS_DRIVE = '/Drive';
 const ROOTS_CAR = '/Car';
 
 // ----------------------------------------------------------------------
@@ -23,12 +22,6 @@ export const PATH_PAGE = {
   page404: '/404',
   page500: '/500',
 };
-
-export const DRIVE_PAGE = {
-  drive: path(ROOTS_DRIVE, '/MyDrive'),
-  folder: path(ROOTS_DRIVE, '/folder'),
-};
-
 
 export const CAR_PAGE = {
   list: path(ROOTS_CAR, '/List'),

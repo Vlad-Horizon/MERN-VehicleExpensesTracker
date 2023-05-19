@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dispatch, useSelector } from '../store';
+import { dispatch } from '../store';
 
 // ----------------------------------------------------------------------
 
@@ -11,11 +11,11 @@ const tokensSlice = createSlice({
   name: 'tokens',
   initialState,
   reducers: {
-    getTokens(state) {
-      if (state.tokens) {
-        return state.tokens
-      }
-    },
+    // getTokens(state) {
+    //   if (state.tokens) {        
+    //     return state.tokens
+    //   }
+    // },
 
     setTokens(state, action) {
       state.tokens = action.payload;
@@ -48,12 +48,6 @@ export function setTokens(accessToken: string, refreshToken: string) {
 export function removeTokens() {
   return () => {
     dispatch(tokensSlice.actions.setTokens(null));
-  };
-}
-
-export function getTokens() {
-  return () => {
-    useSelector(getTokens())
   };
 }
 

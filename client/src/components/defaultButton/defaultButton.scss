@@ -11,12 +11,8 @@
   font-weight: 700;
   font-size: 14px;
   overflow: hidden;
-  transition: 
-    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, 
-    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, 
-    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, 
-    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms
-  ;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   cursor: pointer;
 
   &:hover {
@@ -25,7 +21,7 @@
 
   // buttonAnimation
   .buttonAnimation-enter {
-    animation: buttonCircle .5s cubic-bezier(0.4, 0, 0.2, 1) 0ms forwards normal;
+    animation: buttonCircle 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0ms forwards normal;
     opacity: 0;
   }
   .buttonAnimation-enter-active {
@@ -36,7 +32,7 @@
     opacity: 1;
   }
   .buttonAnimation-exit-active {
-    animation: buttonCircle .5s cubic-bezier(0.4, 0, 0.2, 1) 0ms forwards normal;
+    animation: buttonCircle 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0ms forwards normal;
     opacity: 0;
   }
 
@@ -52,7 +48,7 @@
   }
 }
 
-// 
+//
 .defaultButton_border {
   color: rgb(255, 255, 255);
   border: 1px solid rgba(145, 158, 171, 0.32);
@@ -69,8 +65,19 @@
   box-shadow: none;
 
   &:hover {
-    background-color: rgb(16,57,150);
+    background-color: rgb(16, 57, 150);
     box-shadow: rgba(32, 101, 209, 0.24) 0px 8px 16px 0px;
+  }
+}
+
+.defaultButton_bg_red {
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 86, 48);
+  box-shadow: none;
+
+  &:hover {
+    background-color: rgb(183, 29, 24);
+    box-shadow: rgba(255, 86, 48, 0.24) 0px 8px 16px 0px;
   }
 }
 
@@ -80,7 +87,7 @@
     opacity: 0.1;
   }
   100% {
-      transform: scale(1);
-      opacity: 0.3;
+    transform: scale(1);
+    opacity: 0.3;
   }
 }

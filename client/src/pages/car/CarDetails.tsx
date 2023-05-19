@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  ButtonsHeader,
   CarNumber,
   DefaultButton,
   Galery,
   Hr,
   InputText,
   LineButtons,
+  PathToPage,
   Popup,
   ScrollHorizontel,
   TableBody,
@@ -268,8 +270,19 @@ export default function CarDetails() {
 
   return (
     <>
-      <DefaultButton text="Close" border to={CAR_PAGE.list} style={{ marginRight: '5px' }} />
-      <DefaultButton text="Edit" border to={`${CAR_PAGE.edit}/${carId}`} style={{ marginRight: '5px' }} />
+      <div className="pageHeader">
+        <PathToPage
+          props={[
+            ['Car list', CAR_PAGE.list],
+            [`Car details`, `${CAR_PAGE.details}/${carId}`],
+          ]}
+        />
+
+        <ButtonsHeader>
+          <DefaultButton text="Close" border to={CAR_PAGE.list} style={{ marginRight: '5px' }} />
+          <DefaultButton text="Edit" border to={`${CAR_PAGE.edit}/${carId}`} style={{ marginRight: '5px' }} />
+        </ButtonsHeader>
+      </div>
 
       <div className="carMainInfo">
         <div className="carImage">

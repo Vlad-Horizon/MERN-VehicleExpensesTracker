@@ -1,0 +1,31 @@
+.pathToPageComponent {
+  margin: auto 0;
+  padding: 10px;
+
+  .page {
+    color: rgb(47, 129, 247);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .thisPage {
+    margin: 0px;
+    font-weight: 600;
+    display: inline-block;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .line {
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: 400;
+    color: rgb(125, 133, 144);
+    font-size: 16px;
+  }
+}

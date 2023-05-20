@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DefaultButton, Galery, InputFiles, InputText, Popup, PopupGalery, ScrollHorizontel } from '../../components';
+import {
+  ButtonsHeader,
+  DefaultButton,
+  Galery,
+  InputFiles,
+  InputText,
+  PathToPage,
+  Popup,
+  PopupGalery,
+} from '../../components';
 import { useForm, useInputText, useInputFiles } from '../../hooks';
 
 import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
@@ -7,9 +16,8 @@ import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
 import './carAdd.scss';
 import { CAR_PAGE } from '../../routes/paths';
 import PopupConvertKeyboard from '../../components/popup/PopupConvertKeyboard';
-import MinImg from '../../components/galery/MinImg';
 import carApi from '../../services/carApi';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { createUrlToFile } from '../../utils/createUrlToFile';
 import { base64DecodeFile } from '../../utils/base64DecodeFile';
 
@@ -28,6 +36,7 @@ interface carToEdit {
 
 export default function CarList({ isEdit = false }: CarListInterface) {
   const { carId } = useParams();
+  const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [convertKeyboardStatys, setConvertKeyboardStatys] = useState<boolean>(false);
   const [editFiles, setEditFiles] = useState<boolean>(false);
@@ -126,8 +135,10 @@ export default function CarList({ isEdit = false }: CarListInterface) {
         number: carNumber.value,
         price: +carPrice.value,
       });
+      navigate('/');
       return;
     }
+
     carApi.createCar({
       images: carIMG.files.map((file) => file.base64),
       brend: carBrend.value,
@@ -136,6 +147,7 @@ export default function CarList({ isEdit = false }: CarListInterface) {
       number: carNumber.value,
       price: +carPrice.value,
     });
+    navigate('/');
   };
 
   const deleteCar = async () => {
@@ -145,34 +157,45 @@ export default function CarList({ isEdit = false }: CarListInterface) {
 
   return (
     <>
-      <div className="contentPanel">
-        <DefaultButton
-          text="Convert keyboard"
-          bg
-          events={{
-            onClick: () => setConvertKeyboardStatys(true),
-          }}
-          style={{ marginRight: '5px' }}
+      <div className="pageHeader">
+        <PathToPage
+          props={[
+            ['Car list', CAR_PAGE.list],
+            [`Car ${isEdit ? 'edit' : 'create'}`, `${isEdit ? `${CAR_PAGE.edit}/${carId}` : CAR_PAGE.add}`],
+          ]}
         />
 
-        <DefaultButton
-          text="Delete car"
-          bg
-          events={{
-            onClick: () => deleteCar(),
-          }}
-          style={{ marginRight: '5px' }}
-        />
+        <ButtonsHeader>
+          {/* <DefaultButton
+            text="Convert keyboard"
+            bg
+            events={{
+              onClick: () => setConvertKeyboardStatys(true),
+            }}
+            style={{ marginRight: '5px' }}
+          /> */}
 
-        <DefaultButton text="Close" border to={CAR_PAGE.list} style={{ marginRight: '5px' }} />
+          {isEdit && (
+            <DefaultButton
+              text="Delete car"
+              red
+              events={{
+                onClick: () => deleteCar(),
+              }}
+              style={{ marginRight: '5px' }}
+            />
+          )}
 
-        <DefaultButton
-          text="Save"
-          bg
-          events={{
-            onClick: () => submit(),
-          }}
-        />
+          <DefaultButton text="Close" border to={CAR_PAGE.list} style={{ marginRight: '5px' }} />
+
+          <DefaultButton
+            text="Save"
+            bg
+            events={{
+              onClick: () => submit(),
+            }}
+          />
+        </ButtonsHeader>
       </div>
 
       <div className="addCarPage">

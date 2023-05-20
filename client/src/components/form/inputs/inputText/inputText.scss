@@ -1,0 +1,116 @@
+@import '../inputs.scss';
+
+.inputFile {
+  // Main params
+  .input {
+    .inputInput {
+      cursor: text;
+
+      fieldset {
+        overflow: hidden;
+
+        legend {
+          overflow: hidden;
+          visibility: hidden;
+          max-width: 0.01px;
+          transition: max-width 50ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+
+          span {
+            padding-left: 5px;
+            padding-right: 5px;
+            display: inline-block;
+            opacity: 0;
+            visibility: visible;
+          }
+        }
+      }
+    }
+  }
+
+  // -----------------------------------------------------------------
+
+  // Normal
+  .inputNoError {
+    label {
+      color: rgb(99, 115, 129);
+    }
+
+    .inputInput {
+      color: rgb(255, 255, 255);
+
+      input {
+        &:hover + fieldset {
+          border-color: rgb(255, 255, 255);
+        }
+      }
+
+      fieldset {
+        border-color: rgba(145, 158, 171, 0.32);
+      }
+    }
+  }
+
+  // -----------------------------------------------------------------
+
+  // Input Is Change
+  .inputIsChange {
+    label {
+      transform: translate(14px, -9px) scale(0.75);
+      max-width: calc(133% - 24px);
+    }
+
+    .inputInput {
+      fieldset {
+        legend {
+          max-width: 100%;
+          transition: max-width 100ms cubic-bezier(0, 0, 0.2, 1) 50ms;
+        }
+      }
+    }
+  }
+
+  // -----------------------------------------------------------------
+
+  // Error
+  .inputError {
+    label {
+      color: rgb(255, 86, 48);
+    }
+
+    .inputInput {
+      fieldset {
+        border-color: rgb(255, 86, 48);
+      }
+    }
+
+    .inputTextError {
+      color: rgb(255, 86, 48);
+      line-height: 1.5;
+      font-size: 14px;
+      text-align: left;
+      margin: 8px 14px 0px;
+    }
+  }
+
+  // -----------------------------------------------------------------
+
+  // Focus
+  .inputFocus {
+    label {
+      color: rgb(255, 255, 255);
+      transform: translate(14px, -9px) scale(0.75);
+      max-width: calc(133% - 24px);
+    }
+
+    .inputInput {
+      fieldset {
+        border-color: rgb(255, 255, 255);
+
+        legend {
+          max-width: 100%;
+          transition: max-width 100ms cubic-bezier(0, 0, 0.2, 1) 50ms;
+        }
+      }
+    }
+  }
+}

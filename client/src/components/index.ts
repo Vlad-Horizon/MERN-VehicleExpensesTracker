@@ -1,7 +1,9 @@
 export { default as Hr} from './hr/Hr';
 export { default as Search} from './search/Search';
+export { default as PathToPage} from './pathToPage/PathToPage';
 
 // buttons
+export { default as ButtonsHeader} from './buttonsHeader/ButtonsHeader';
 export { default as RadioButton} from './radioButton/RadioButton';
 export { default as DefaultButton} from './defaultButton/DefaultButton';
 export { default as LineButtons} from './lineButtons/LineButtons';

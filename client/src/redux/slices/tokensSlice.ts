@@ -1,32 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dispatch, useSelector } from '../store';
+import { dispatch } from '../store';
 
 // ----------------------------------------------------------------------
 
 const initialState = {
-  tokens: null,
+  tokens: {
+    accessToken: null,
+    refreshToken: null,
+  },
 };
 
 const tokensSlice = createSlice({
   name: 'tokens',
   initialState,
   reducers: {
-    getTokens(state) {
-      if (state.tokens) {
-        return state.tokens
-      }
-    },
-
     setTokens(state, action) {
       state.tokens = action.payload;
     },
 
-    // setAccessToken(state, action) {
-    //   if (state.tokens) {
-    //     const newTokens = Object.assign({}, state.tokens, { access: action.payload });
-    //     state.tokens = newTokens;
-    //   }
-    // },
+    setAccessToken(state, action) {
+      state.tokens.accessToken = action.payload;
+    }
   },
 });
 
@@ -45,15 +39,17 @@ export function setTokens(accessToken: string, refreshToken: string) {
   };
 }
 
-export function removeTokens() {
+export function setAccessToken(accessToken: string) {
   return () => {
-    dispatch(tokensSlice.actions.setTokens(null));
+    dispatch(tokensSlice.actions.setAccessToken({
+      accessToken: accessToken,
+    }));
   };
 }
 
-export function getTokens() {
+export function removeTokens() {
   return () => {
-    useSelector(getTokens())
+    dispatch(tokensSlice.actions.setTokens(null));
   };
 }
 

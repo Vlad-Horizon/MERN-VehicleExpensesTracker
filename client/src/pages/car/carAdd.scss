@@ -1,13 +1,13 @@
-.contentPanel {
-  display: flex;
-  justify-content: end;
-  padding: 10px;
+.pageHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 56px;
 }
 
 .addCarPage {
   display: flex;
   flex-flow: row wrap;
-  
+
   .imgContainer {
     flex-basis: 50%;
     flex-grow: 0;
@@ -19,7 +19,7 @@
     flex-basis: 50%;
     flex-grow: 0;
     max-width: 50%;
-    
+
     .innerAddCarForm {
       display: grid;
       grid-template-columns: repeat(1, 1fr);

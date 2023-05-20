@@ -49,14 +49,14 @@ export default function Router() {
             </GuestGuard>
           ),
         },
-        // {
-        //   path: 'register',
-        //   element: (
-        //     <GuestGuard>
-        //       <RegisterPage />
-        //     </GuestGuard>
-        //   ),
-        // },
+        {
+          path: 'register',
+          element: (
+            <GuestGuard>
+              <RegisterPage />
+            </GuestGuard>
+          ),
+        },
         // { path: 'reset-password', element: <ResetPasswordPage /> },
       ],
     },
@@ -112,7 +112,7 @@ export default function Router() {
 
 // AUTH
 const LoginPage = Loadable(lazy(() => import('../pages/authPages/LoginPage')));
-// const RegisterPage = Loadable(lazy(() => import('../pages/auth/register/Registration')));
+const RegisterPage = Loadable(lazy(() => import('../pages/authPages/RegistrPage')));
 // // const VerifyCodePage = Loadable(lazy(() => import('../pages/auth/VerifyCodePage')));
 // // const NewPasswordPage = Loadable(lazy(() => import('../pages/auth/NewPasswordPage')));
 // const ResetPasswordPage = Loadable(lazy(() => import('../pages/auth/resetPassword/ResetPassword')));

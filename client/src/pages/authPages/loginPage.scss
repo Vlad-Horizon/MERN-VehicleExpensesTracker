@@ -1,0 +1,35 @@
+.loginPageComponent {
+  margin: auto;
+  max-width: 400px;
+  margin-top: 200px;
+
+  .pageName {
+    font-size: 1.5rem;
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+  }
+
+  .redirect {
+    margin: 0px 0px 5px 0px;
+
+    span {
+      margin: 0px;
+      line-height: 1.57143;
+      font-size: 0.875rem;
+
+      a {
+        font-weight: 600;
+        line-height: 1.57143;
+        font-size: 0.875rem;
+        color: rgb(32, 101, 209);
+        margin: 0px 0px 0px 4px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

@@ -12,7 +12,6 @@ import { logout } from '../redux/slices/userSlice';
 // services
 import authServices from '../services/authService';
 import { dispatch, store } from '../redux/store';
-// import { getTokens } from '../redux/slices/tokensSlice';
 
 // ----------------------------------------------------------------------
 

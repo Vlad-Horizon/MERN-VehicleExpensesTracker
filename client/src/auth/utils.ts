@@ -8,7 +8,7 @@ import axios from '../utils/axios';
 import {logout} from '../redux/slices/userSlice';
 
 import authServices from '../services/authService'
-import { dispatch } from '../redux/store';
+import { dispatch, store } from '../redux/store';
 import { setTokens } from '../redux/slices/tokensSlice';
 
 // ----------------------------------------------------------------------
@@ -53,9 +53,10 @@ const tokenExpired = ({accessExp, refreshExp}: tokenExpiredProps) => {
   if (refreshTimeLeft > accessTimeLeft) {
     expiredTimer = setTimeout(
       async () => {
-        const res = await authServices.token(localStorage.getItem('refreshToken'))
-        const { accessToken, refreshToken } = res;
-        setSession({access: accessToken, refresh: refreshToken});
+        const { tokens } = store.getState();
+        const res = await authServices.token(tokens.tokens.refreshToken)
+        const { accessToken } = res;
+        setSession({access: accessToken, refresh: tokens.tokens.refreshToken});
       }, accessTimeLeft
     )
     return

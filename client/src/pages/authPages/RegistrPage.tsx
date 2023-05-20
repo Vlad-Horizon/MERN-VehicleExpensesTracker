@@ -5,14 +5,21 @@ import InputText from '../../components/form/inputs/inputText/InputText';
 import Form from '../../components/form/Form';
 import { regPatterns } from '../../config/config';
 import './loginPage.scss';
-import { dispatch } from '../../redux/store';
-import { login } from '../../redux/slices/userSlice';
-import { Link } from 'react-router-dom';
+import authService from '../../services/authService';
+import { Link, useNavigate } from 'react-router-dom';
 import { PATH_AUTH } from '../../routes/paths';
 
-export default function LoginPage() {
-  const onSubmit = () => {
-    dispatch(login(form.inputs.userName.value, form.inputs.password.value));
+export default function RegistrPage() {
+  const navigate = useNavigate();
+  const onSubmit = async () => {
+    const res = await authService.register({
+      userName: form.inputs.userName.value,
+      password: form.inputs.password.value,
+    });
+
+    if (res.code === 200) {
+      navigate('/Auth/Login');
+    }
   };
 
   const form = useForm({
@@ -39,11 +46,11 @@ export default function LoginPage() {
   return (
     <>
       <div className="loginPageComponent">
-        <div className="pageName">Login</div>
+        <div className="pageName">Registration</div>
         <div className="redirect">
           <span>
-            New user?
-            <Link to={PATH_AUTH.register}>Create an account</Link>
+            Already have an account?
+            <Link to={PATH_AUTH.login}>Sign in</Link>
           </span>
         </div>
 

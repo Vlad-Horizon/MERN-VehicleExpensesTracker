@@ -1,0 +1,30 @@
+.FormComponent {
+  .inputsBlock {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .inputsBlockColumn {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .buttonsBlock {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .inputsBlock {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}

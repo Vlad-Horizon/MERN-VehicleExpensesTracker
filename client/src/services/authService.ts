@@ -6,7 +6,6 @@ import { dispatch, store } from '../redux/store';
 import { triggerLoader } from '../redux/slices/utils';
 
 class AuthService {
-
   setAxiosInterceptors = ({ onLogout }: { onLogout: Function }) => {
     axios.interceptors.response.use(
       (response) => {
@@ -43,56 +42,62 @@ class AuthService {
     );
   };
 
-  login = (userName: string, password: string) => new Promise<any>((resolve, reject) => {
-    axios.post(`${API}/Login`, { userName, password })
-      .then((response: any) => {
-        if (response.data) {
-          this.setSession(response.data.AuthToken, userName);
-          resolve(response.data);
-        } else {
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  login = (userName: string, password: string) =>
+    new Promise<any>((resolve, reject) => {
+      axios
+        .post(`${API}/Login`, { userName, password })
+        .then((response: any) => {
+          if (response.data) {
+            this.setSession(response.data.AuthToken, userName);
+            resolve(response.data);
+          } else {
+            reject(response.data.error);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
 
-  token = (refreshToken: string | null) => new Promise<any>((resolve, reject) => {
-    axios.post(`${API}/refresh`, { refreshToken })
-      .then((response: any) => {
-        if (response.data) {
-          // this.setSession(response.data.AuthToken, userName);
-          resolve(response.data);
-        } else {
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  token = (refreshToken: string | null) =>
+    new Promise<any>((resolve, reject) => {
+      axios
+        .post(`${API}/refresh`, { refreshToken })
+        .then((response: any) => {
+          if (response.data) {
+            // this.setSession(response.data.AuthToken, userName);
+            resolve(response.data);
+          } else {
+            reject(response.data.error);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
 
-  logout = () => new Promise<Boolean>((resolve, reject) => {
-    axios.post(`${API}/Account/Logout`)
-      .then((response: any) => {
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-    this.setSession(null);
-  });
+  logout = () =>
+    new Promise<Boolean>((resolve, reject) => {
+      axios
+        .post(`${API}/Account/Logout`)
+        .then((response: any) => {
+          if (response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.data.error);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      this.setSession(null);
+    });
 
   setSession = (authToken: string | null, userName?: string) => {
     if (authToken && userName) {
       localStorage.setItem('authToken', authToken);
-      axios.defaults.headers.common['X-Access-Token'] = `${ authToken }`;
-      uninterceptedAxiosInstance.defaults.headers.common['X-Access-Token'] = `${ authToken }`;
+      axios.defaults.headers.common['X-Access-Token'] = `${authToken}`;
+      uninterceptedAxiosInstance.defaults.headers.common['X-Access-Token'] = `${authToken}`;
     } else {
       localStorage.removeItem('authToken');
       localStorage.removeItem('userName');
@@ -101,35 +106,39 @@ class AuthService {
     }
   };
 
-  getCurrentUser = () => new Promise<any>((resolve, reject) => {
-    axios.get(`${ API }/myAccount`)
-      .then((response: any) => {
-        if (response.data) {
-          const {data} = response;
-          resolve(data);
-        } else {
-          reject(response.data.error);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  getCurrentUser = () =>
+    new Promise<any>((resolve, reject) => {
+      axios
+        .get(`${API}/myAccount`)
+        .then((response: any) => {
+          if (response.data) {
+            const { data } = response;
+            resolve(data);
+          } else {
+            reject(response.data.error);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
 
-  // register = (data: object) => new Promise<any>((resolve, reject) => {
-  //   axios.post(`${API}/Account/Registration`, data)
-  //     .then((response: any) => {
-  //       if (response.data) {
-  //         // this.setSession(response.data.access_token, response.data.token_type, rememberMe, emailAddress, response.data.refresh_token);
-  //         resolve(response.data);
-  //       } else {
-  //         reject(response.data.error);
-  //       }
-  //     })
-  //     .catch((error: any) => {
-  //       reject(error);
-  //     });
-  // });
+  register = (data: object) =>
+    new Promise<any>((resolve, reject) => {
+      axios
+        .post(`${API}/Registration`, data)
+        .then((response: any) => {
+          if (response.data) {
+            // this.setSession(response.data.access_token, response.data.token_type, rememberMe, emailAddress, response.data.refresh_token);
+            resolve({ data: response.data, code: response.status });
+          } else {
+            reject(response.data.error);
+          }
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
 
   // sendVerifyPhone = (data: object) => new Promise<Boolean>((resolve, reject) => {
   //   axios.post(`${API}/Account/SendVerifyPhone`, data)
@@ -162,7 +171,6 @@ class AuthService {
   //       reject(error);
   //     });
   // });
-
 }
 
 const authService = new AuthService();

@@ -1,5 +1,4 @@
 .componentName_InputFile {
-
   // Main params
   .inputContainer_InputFile {
     display: inline-flex;
@@ -11,7 +10,7 @@
     border: 0px none;
     vertical-align: top;
     width: 100%;
-  
+
     label {
       line-height: 1.4375em;
       font-size: 1rem;
@@ -26,14 +25,13 @@
       left: 0px;
       top: 0px;
       transform: translate(14px, 16px) scale(1);
-      transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, 
-                  transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, 
-                  max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+      transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+        max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       z-index: 1;
       pointer-events: none;
       cursor: pointer;
     }
-  
+
     .input_InputFile {
       position: relative;
       display: inline-flex;
@@ -44,7 +42,7 @@
       font-size: 1rem;
       box-sizing: border-box;
       cursor: pointer;
-  
+
       input {
         font: inherit;
         letter-spacing: inherit;
@@ -61,7 +59,7 @@
         padding: 16.5px 14px;
         outline: none;
       }
-  
+
       fieldset {
         text-align: left;
         position: absolute;
@@ -73,7 +71,7 @@
         border-style: solid;
         border-width: 1px;
         min-width: 0%;
-  
+
         legend {
           float: unset;
           width: auto;
@@ -83,7 +81,7 @@
           font-size: 0.75em;
           white-space: nowrap;
           max-width: 100%;
-  
+
           span {
             position: relative;
             top: -5px;
@@ -95,20 +93,20 @@
       }
     }
   }
-  
+
   // Normal
   .normal_InputFile {
     label {
       color: rgb(99, 115, 129);
     }
-  
+
     .input_InputFile {
       color: rgb(255, 255, 255);
-  
-      &:hover fieldset{
+
+      &:hover fieldset {
         border-color: rgb(255, 255, 255);
       }
-  
+
       fieldset {
         border-color: rgba(145, 158, 171, 0.32);
 
@@ -118,13 +116,13 @@
       }
     }
   }
-  
+
   // Error
   .error_InputFile {
     label {
       color: rgb(255, 86, 48);
     }
-  
+
     .input_InputFile {
       fieldset {
         border-color: rgb(255, 86, 48);
@@ -134,7 +132,7 @@
         }
       }
     }
-  
+
     .textError {
       color: rgb(255, 86, 48);
       line-height: 1.5;
@@ -143,19 +141,19 @@
       margin: 8px 14px 0px;
     }
   }
-  
+
   // Focus
   .focus_InputFile {
     label {
       color: rgb(255, 255, 255);
     }
-  
+
     .input_InputFile {
       outline: none;
 
       fieldset {
         border-color: rgb(255, 255, 255);
-  
+
         legend {
           transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
           color: rgb(255, 255, 255);
@@ -169,8 +167,6 @@
     label {
       color: rgb(255, 255, 255);
     }
-
-    
   }
 
   // isDrop

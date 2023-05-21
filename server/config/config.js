@@ -14,7 +14,7 @@ export const regex = {
   password: /^.{1,30}$/,
   mongoId: /^[a-z0-9]{24}$/,
   getFileType: /(?<=\.)\w+$/,
-  
+
   car: {
     brend: /^[A-Za-z0-9А-Яа-я -]+$/,
     model: /^[A-Za-z0-9А-Яа-я -]+$/,
@@ -30,7 +30,7 @@ export const regex = {
     number: /^[0-9]+$/,
     price: /^[0-9]+$/,
   },
-}
+};
 
 export const jwtConfig = {
   access: {
@@ -40,7 +40,7 @@ export const jwtConfig = {
   },
   refresh: {
     exp: '7d',
-    key: process.env.REFRESH_TOKEN_KEY|| '#FDer5$%53f$33bJH%B#$5%$eggFdsfw34554Fdsfbb',
+    key: process.env.REFRESH_TOKEN_KEY || '#FDer5$%53f$33bJH%B#$5%$eggFdsfw34554Fdsfbb',
     type: 'refresh',
   },
-}
+};

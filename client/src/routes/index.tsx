@@ -95,15 +95,15 @@ export default function Router() {
     // },
 
     // Services
-    // {
-    //   element: (<CompactLayout />),
-    //   children: [
-    //     { path: '403', element: <Page403 /> },
-    //     { path: '404', element: <Page404 /> },
-    //     { path: '500', element: <Page500 /> },
-    //   ],
-    // },
-    // { path: '*', element: <Navigate to="/404" replace /> },
+    {
+      // element: <CompactLayout />,
+      children: [
+        { path: '403', element: <Page403 /> },
+        { path: '404', element: <Page404 /> },
+        { path: '500', element: <Page500 /> },
+      ],
+    },
+    { path: '*', element: <Navigate to="/404" replace /> },
     { path: '/', element: <Navigate to={CAR_PAGE.list} replace /> },
   ]);
 }
@@ -118,9 +118,9 @@ const RegisterPage = Loadable(lazy(() => import('../pages/authPages/RegistrPage'
 // const ResetPasswordPage = Loadable(lazy(() => import('../pages/auth/resetPassword/ResetPassword')));
 
 // // MAIN
-// const Page403 = Loadable(lazy(() => import('../pages/services/Page403')));
-// const Page404 = Loadable(lazy(() => import('../pages/services/Page404')));
-// const Page500 = Loadable(lazy(() => import('../pages/services/Page500')));
+const Page403 = Loadable(lazy(() => import('../pages/errorPages/Page403')));
+const Page404 = Loadable(lazy(() => import('../pages/errorPages/Page404')));
+const Page500 = Loadable(lazy(() => import('../pages/errorPages/Page500')));
 
 // // Drive
 // const MyDrive = Loadable(lazy(() => import('../pages/drive/Drive')));

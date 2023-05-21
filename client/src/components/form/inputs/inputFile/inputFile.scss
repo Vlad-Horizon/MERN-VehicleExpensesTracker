@@ -1,0 +1,113 @@
+@import '../inputs.scss';
+
+.inputFile {
+  // Main params
+  .input {
+    label {
+      cursor: pointer;
+    }
+    .inputInput {
+      cursor: pointer;
+
+      fieldset {
+        legend {
+          max-width: 100%;
+
+          span {
+            position: relative;
+            top: -5px;
+            padding-left: 5px;
+            padding-right: 5px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  // Normal
+  .inputNoError {
+    label {
+      color: rgb(99, 115, 129);
+    }
+
+    .inputInput {
+      color: rgb(255, 255, 255);
+
+      &:hover fieldset {
+        border-color: rgb(255, 255, 255);
+      }
+
+      fieldset {
+        border-color: rgba(145, 158, 171, 0.32);
+
+        legend {
+          color: rgb(99, 115, 129);
+        }
+      }
+    }
+  }
+
+  // Error
+  .inputError {
+    label {
+      color: rgb(255, 86, 48);
+    }
+
+    .inputInput {
+      fieldset {
+        border-color: rgb(255, 86, 48);
+
+        legend {
+          color: rgb(255, 86, 48);
+        }
+      }
+    }
+
+    .textError {
+      color: rgb(255, 86, 48);
+      line-height: 1.5;
+      font-size: 14px;
+      text-align: left;
+      margin: 8px 14px 0px;
+    }
+  }
+
+  // Focus
+  .inputFocus {
+    label {
+      color: rgb(255, 255, 255);
+    }
+
+    .inputInput {
+      outline: none;
+
+      fieldset {
+        border-color: rgb(255, 255, 255);
+
+        legend {
+          transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+          color: rgb(255, 255, 255);
+        }
+      }
+    }
+  }
+
+  // isDrop
+  .inputIsChange {
+    label {
+      color: rgb(255, 255, 255);
+    }
+
+    .input_InputFile {
+      fieldset {
+        border-color: rgb(255, 255, 255);
+
+        legend {
+          transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+          color: rgb(255, 255, 255);
+        }
+      }
+    }
+  }
+}

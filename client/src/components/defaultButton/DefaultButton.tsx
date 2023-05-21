@@ -38,6 +38,7 @@ export default function DefaultButton({ text, to, border, bg, red, events, style
     return (
       <div
         ref={refButton}
+        tabIndex={0}
         className={`defaultButton ${border ? 'defaultButton_border' : ''}  ${bg ? 'defaultButton_bg' : ''} ${
           red ? 'defaultButton_bg_red' : ''
         }`}

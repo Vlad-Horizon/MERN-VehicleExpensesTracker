@@ -1,0 +1,48 @@
+.mainErrprPageComponent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
+
+  .errorContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 400px;
+    min-width: 200px;
+    // margin-top: 100px;
+    padding-bottom: 100px;
+
+    h2 {
+      font-size: 1.875rem;
+      margin: 0px 0px 16px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    span {
+      color: rgb(145, 158, 171);
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: center;
+      font-family: Public Sans, sans-serif;
+    }
+
+    .errorCode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 200px;
+
+      h2 {
+        font-size: 8rem;
+        background: linear-gradient(20deg, #ff6600, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}

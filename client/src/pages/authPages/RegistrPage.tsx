@@ -4,10 +4,11 @@ import { useInputText } from '../../components/form/inputs/inputText/useInputTex
 import InputText from '../../components/form/inputs/inputText/InputText';
 import Form from '../../components/form/Form';
 import { regPatterns } from '../../config/config';
-import './loginPage.scss';
+import './authPages.scss';
 import authService from '../../services/authService';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH_AUTH } from '../../routes/paths';
+import { DefaultButton } from '../../components';
 
 export default function RegistrPage() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function RegistrPage() {
 
   return (
     <>
-      <div className="loginPageComponent">
+      <div className="registrPageComponent">
         <div className="pageName">Registration</div>
         <div className="redirect">
           <span>
@@ -54,9 +55,16 @@ export default function RegistrPage() {
           </span>
         </div>
 
-        <Form props={form} columnStyle>
-          <InputText defaut={form.inputs.userName} />
-          <InputText defaut={form.inputs.password} />
+        <Form>
+          <div className="authForm">
+            <div className={'inputsBlock'}>
+              <InputText defaultProps={form.inputs.userName} />
+              <InputText defaultProps={form.inputs.password} />
+            </div>
+            <div className="buttonsBlock">
+              <DefaultButton text="Submit" bg events={{ onClick: form.submit }} />
+            </div>
+          </div>
         </Form>
       </div>
     </>

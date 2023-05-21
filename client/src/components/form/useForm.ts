@@ -24,9 +24,14 @@ export function useForm({ inputs, submitFunction }: useForm) {
     }
   }, [inputs]);
 
+  const submit = () => {
+    if (!valid) return;
+    submitFunction();
+  };
+
   return {
     valid,
-    submitFunction,
+    submit,
     //
     inputs,
   };

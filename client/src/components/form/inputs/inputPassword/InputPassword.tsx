@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
-import './inputText.scss';
-import { useInputTextResult } from './useInputText';
+import './inputPassword.scss';
+import RadioButton from '../../../radioButton/RadioButton';
+import { PasswordHidn, PasswordView } from '../../../../assets';
+import { InputText } from '../inputText/InputText';
 
 // ----------------------------------------------------------------------
 
-export interface InputText {
-  defaultProps: useInputTextResult;
-  events?: InputTextEvents;
-}
-
-interface InputTextEvents {
-  // onChange?: any;
-  onPaste?: any;
-}
-
-// ----------------------------------------------------------------------
-
-export default function InputText({ defaultProps, events }: InputText) {
+export default function InputPassword({ defaultProps, events }: InputText) {
   const [inputFocus, setInputFocus] = useState<boolean>(false);
+  const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const { name, placeholder, value, onChange, onBlur, error, errorText } = defaultProps;
 
-  const onFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFocus = () => {
     setInputFocus(true);
   };
 
@@ -29,9 +20,13 @@ export default function InputText({ defaultProps, events }: InputText) {
     onBlur();
   };
 
+  const onClickViewPassword = () => {
+    setVisiblePassword(!visiblePassword);
+  };
+
   return (
     <>
-      <div className="inputComponents inputText">
+      <div className="inputComponents inputText inputPassword">
         <div
           className={`input 
             ${error ? 'inputError' : 'inputNoError'}
@@ -44,12 +39,17 @@ export default function InputText({ defaultProps, events }: InputText) {
           <div className="inputInput">
             <input
               name={name}
-              type={'text'}
+              type={visiblePassword ? 'text' : 'password'}
               value={value}
               onFocus={onFocus}
               onBlur={onBlurFunction}
               onChange={(e) => onChange(e)}
               {...events}
+            />
+
+            <RadioButton
+              children={visiblePassword ? <PasswordView /> : <PasswordHidn />}
+              events={{ onClick: onClickViewPassword }}
             />
 
             <fieldset>

@@ -11,17 +11,12 @@ export default function InputPassword({ defaultProps, events }: InputText) {
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const { name, placeholder, value, onChange, onBlur, error, errorText } = defaultProps;
 
-  const onFocus = () => {
-    setInputFocus(true);
-  };
+  const onFocus = () => setInputFocus(true);
+  const onClickViewPassword = () => setVisiblePassword(!visiblePassword);
 
   const onBlurFunction = () => {
     setInputFocus(false);
     onBlur();
-  };
-
-  const onClickViewPassword = () => {
-    setVisiblePassword(!visiblePassword);
   };
 
   return (

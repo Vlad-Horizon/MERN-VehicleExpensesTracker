@@ -1,0 +1,42 @@
+.dragAndDropComponent {
+  position: relative;
+  display: inline-block;
+  width: 100vw;
+  height: 100vh;
+
+  .dragAndDropContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(22, 28, 36, 0.5);
+    z-index: 10;
+
+    .dragAndDropContent {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100vw;
+      max-width: 500px;
+      min-width: 250px;
+      height: 250px;
+      margin: 10px;
+      background-color: rgba(22, 28, 36, 0.8);
+      border: 2px dashed rgba(145, 158, 171, 0.32);
+      border-radius: 16px;
+      z-index: 11;
+
+      h2 {
+        padding: 10px;
+      }
+    }
+  }
+}

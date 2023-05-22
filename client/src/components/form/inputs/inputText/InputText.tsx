@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useTextInputsResult } from '../../inputsInterfaces/toTextInputs';
 import './inputText.scss';
-import { useInputTextResult } from './useInputText';
 
 // ----------------------------------------------------------------------
 
 export interface InputText {
-  defaultProps: useInputTextResult;
+  defaultProps: useTextInputsResult;
   events?: InputTextEvents;
 }
 
@@ -20,9 +20,7 @@ export default function InputText({ defaultProps, events }: InputText) {
   const [inputFocus, setInputFocus] = useState<boolean>(false);
   const { name, placeholder, value, onChange, onBlur, error, errorText } = defaultProps;
 
-  const onFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputFocus(true);
-  };
+  const onFocus = (e: React.ChangeEvent<HTMLInputElement>) => setInputFocus(true);
 
   const onBlurFunction = () => {
     setInputFocus(false);

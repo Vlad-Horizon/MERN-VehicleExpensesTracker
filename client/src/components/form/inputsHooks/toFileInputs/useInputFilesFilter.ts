@@ -6,6 +6,8 @@ export interface useInputFileFilter {
   files: Array<File> | null;
   accept: string;
   size: number;
+  required: boolean;
+  objectFiles: number;
   setFiles: Function;
 }
 
@@ -21,7 +23,8 @@ const errorsList = {
 
 // -----------------------------------------------------------------
 
-export const useInputFilesFilter = ({ accept, size, files, setFiles }: useInputFileFilter) => {
+export const useInputFilesFilter = ({ accept, size, files, setFiles, objectFiles, required }: useInputFileFilter) => {
+  const [isVisited, setIsVisited] = useState<boolean>(false);
   const [valid, setValid] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
@@ -35,6 +38,10 @@ export const useInputFilesFilter = ({ accept, size, files, setFiles }: useInputF
   useEffect(() => {
     filterFiles();
   }, [files]);
+
+  useEffect(() => {
+    checkRequired();
+  }, [, objectFiles, isVisited, required]);
 
   const checkSize = (fileSize: number) => {
     if (!size) return true;
@@ -69,9 +76,27 @@ export const useInputFilesFilter = ({ accept, size, files, setFiles }: useInputF
     return;
   };
 
+  const onBlur = () => {
+    setIsVisited(true);
+  };
+
+  const checkRequired = () => {
+    if (isVisited && required && objectFiles === 0) {
+      setValid(false);
+      setError(true);
+      setErrorText(errorsList.ua.require);
+    } else {
+      setValid(true);
+      setError(false);
+      setErrorText('');
+    }
+  };
+
   return {
     valid,
     error,
     errorText,
+    onBlur,
+    isVisited,
   };
 };

@@ -1,34 +1,27 @@
 import React, { useRef, useState } from 'react';
+import { useFileInputsResult } from '../../inputsInterfaces/toFileInputs';
 import './inputFile.scss';
-import { useInputFileResult } from './useInputFile';
 
 // ----------------------------------------------------------------------
 
 interface InputFile {
-  defaultProps: useInputFileResult;
+  defaultProps: useFileInputsResult;
 }
 
 // ----------------------------------------------------------------------
 
 export default function InputFile({ defaultProps }: InputFile) {
+  const { name, placeholder, error, errorText, objectFiles, multiple, setFiles, onBlur } = defaultProps;
   const [inputFocus, setInputFocus] = useState<boolean>(false);
   const inputRef = useRef<any>(null);
-  const { name, placeholder, valid, value, error, errorText, objectFiles, required, multiple, setFiles, onBlur } =
-    defaultProps;
+
+  const onClick = () => inputRef.current.click();
+  const onFocus = () => setInputFocus(true);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const newFiles = Array.from(e.target.files);
-    // setFile(newFiles);
-  };
-
-  const onFocus = () => {
-    setInputFocus(true);
-  };
-
-  const onBlurFunction = () => {
-    setInputFocus(false);
-    onBlur();
+    setFiles(newFiles);
   };
 
   const keyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -37,22 +30,33 @@ export default function InputFile({ defaultProps }: InputFile) {
     }
   };
 
+  const onBlurFunction = () => {
+    setInputFocus(false);
+    onBlur();
+  };
+
+  const labelText = () => {
+    if (objectFiles.length === 0) return placeholder;
+    else if (multiple && objectFiles.length > 0) return `Is load: ${objectFiles.length} files`;
+    else if (!multiple && objectFiles.length > 0) return objectFiles[0].file.name;
+  };
+
   return (
     <>
-      <div className="inputComponents inputFile">
+      <div className="inputFile">
         <div
-          className={`input 
+          className={`input
             ${error ? 'inputError' : 'inputNoError'}
             ${inputFocus ? 'inputFocus' : ''}
-            ${value ? 'inputIsChange' : ''}
+            ${objectFiles.length > 0 ? 'inputIsChange' : ''}
           `}
         >
-          <label htmlFor={name}>{placeholder}</label>
+          <label htmlFor={name}>{labelText()}</label>
 
           <div
             className="inputInput"
-            onClick={() => inputRef.current.click()}
-            onKeyDown={(e) => keyPress(e)}
+            onClick={onClick}
+            onKeyDown={keyPress}
             tabIndex={0}
             onFocus={onFocus}
             onBlur={onBlurFunction}
@@ -64,7 +68,7 @@ export default function InputFile({ defaultProps }: InputFile) {
               multiple={multiple}
               hidden
               style={{ visibility: 'hidden' }}
-              onChange={(e) => handleImageUpload(e)}
+              onChange={handleImageUpload}
             />
 
             <fieldset>

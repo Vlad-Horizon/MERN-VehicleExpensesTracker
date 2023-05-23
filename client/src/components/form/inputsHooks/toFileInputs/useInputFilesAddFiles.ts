@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { toBase64 } from '../../../../utils/toBase64';
-import { useInputFileObject } from './useInputFile';
+import { useFileInputsObject } from '../../inputsInterfaces/toFileInputs';
 
 // -----------------------------------------------------------------
 
 export interface useInputFileFilter {
   files: File[] | null;
   setFiles: Function;
-  error: boolean;
+  multiple: boolean;
 }
 
 // -----------------------------------------------------------------
 
-export const useInputAddFiles = ({ files, setFiles, error }: useInputFileFilter) => {
-  const [objectFiles, setObjectFiles] = useState<useInputFileObject[]>([]);
+export const useInputAddFiles = ({ files, setFiles, multiple }: useInputFileFilter) => {
+  const [objectFiles, setObjectFiles] = useState<useFileInputsObject[]>([]);
 
   useEffect(() => {
-    if (!error) {
-      addFilesToObjectFiles();
-    }
-  }, [files, error]);
+    addFilesToObjectFiles();
+  }, [files]);
 
   const addFilesToObjectFiles = () => {
     if (!files) return;
 
-    const newSortedFiles: useInputFileObject[] = [];
+    const newSortedFiles: useFileInputsObject[] = [];
 
     const promises = files.map(async (file) => {
       let sotrFormat = {
@@ -43,7 +41,7 @@ export const useInputAddFiles = ({ files, setFiles, error }: useInputFileFilter)
 
     Promise.all(promises)
       .then(() => {
-        setObjectFiles(objectFiles.concat(newSortedFiles));
+        setObjectFiles(multiple ? objectFiles.concat(newSortedFiles) : newSortedFiles);
         setFiles(null);
       })
       .catch((error) => console.error(error));
@@ -51,5 +49,6 @@ export const useInputAddFiles = ({ files, setFiles, error }: useInputFileFilter)
 
   return {
     objectFiles,
+    setObjectFiles,
   };
 };

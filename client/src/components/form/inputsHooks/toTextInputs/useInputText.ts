@@ -1,37 +1,10 @@
 import React, { useState } from 'react';
+import { useTextInputs } from '../../inputsInterfaces/toTextInputs';
 import { useInputTextValidation } from './useInputTextValidation';
 
 // -----------------------------------------------------------------
 
-export interface useInputText {
-  name: string;
-  placeholder: string;
-  inputValue: string;
-  reg?: RegExp;
-  required?: boolean;
-}
-
-export interface useInputTextResult {
-  // default
-  name: string;
-  placeholder: string;
-  // useInputText
-  value: string;
-  setValue: Function;
-  paste: string;
-  reset: Function;
-  onChange: Function;
-  onBlur: Function;
-  onPaste: Function;
-  // Validation
-  error: boolean;
-  errorText: string;
-  valid: boolean;
-}
-
-// -----------------------------------------------------------------
-
-export function useInputText({ name, placeholder, inputValue, reg, required = false }: useInputText) {
+export default function useInputText({ name, placeholder, inputValue, reg, required = false }: useTextInputs) {
   const [value, setValue] = useState<string>(inputValue);
   const [isVisited, setIsVisited] = useState<boolean>(false);
   const [paste, setPaste] = useState<string>('');

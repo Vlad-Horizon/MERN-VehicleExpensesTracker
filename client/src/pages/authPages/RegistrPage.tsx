@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useForm } from '../../components/form/useForm';
-import { useInputText } from '../../components/form/inputs/inputText/useInputText';
-import InputText from '../../components/form/inputs/inputText/InputText';
 import Form from '../../components/form/Form';
 import { regPatterns } from '../../config/config';
 import './authPages.scss';
@@ -9,13 +6,14 @@ import authService from '../../services/authService';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH_AUTH } from '../../routes/paths';
 import { DefaultButton } from '../../components';
+import { useForm, useInputText, InputText, InputPassword } from '../../components/form';
 
 export default function RegistrPage() {
   const navigate = useNavigate();
   const onSubmit = async () => {
     const res = await authService.register({
-      userName: form.inputs.userName.value,
-      password: form.inputs.password.value,
+      userName: form.textInputs.userName.value,
+      password: form.textInputs.password.value,
     });
 
     if (res.code === 200) {
@@ -26,7 +24,7 @@ export default function RegistrPage() {
   const form = useForm({
     submitFunction: onSubmit,
 
-    inputs: {
+    textInputs: {
       userName: useInputText({
         name: 'userName',
         placeholder: 'Name',
@@ -58,8 +56,8 @@ export default function RegistrPage() {
         <Form>
           <div className="authForm">
             <div className={'inputsBlock'}>
-              <InputText defaultProps={form.inputs.userName} />
-              <InputText defaultProps={form.inputs.password} />
+              <InputText defaultProps={form.textInputs.userName} />
+              <InputPassword defaultProps={form.textInputs.password} />
             </div>
             <div className="buttonsBlock">
               <DefaultButton text="Submit" bg events={{ onClick: form.submit }} />

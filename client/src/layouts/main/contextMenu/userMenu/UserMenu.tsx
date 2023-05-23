@@ -1,31 +1,26 @@
 import React from 'react';
+import { DefaultButton } from '../../../../components';
 import { logout } from '../../../../redux/slices/userSlice';
-import { dispatch } from '../../../../redux/store';
+import { dispatch, store } from '../../../../redux/store';
 
 // scss
 import './userMenu.scss';
 
 export default function UserMenu() {
-  const userName = 'Vlad Horizon';
-  const userMain = 'Vlad.horizon.02032003@gmail.com';
-  const userNamePrefix = 'VH';
+  const { user } = store.getState();
+  const userName = user.user.userName;
 
   return (
     <div className="userMenuContainer">
-      <div className="infoBlock">
-        <div className="userImageContainer">
-          <div className="userImage">{userNamePrefix}</div>
+      <div className="userInfo">
+        <div className="userName">
+          <span>{`User: `}</span>
+          {userName}
         </div>
-        <div className="userInfo">
-          <div className="userName">{userName}</div>
-          <div className="userText">{userMain}</div>
-        </div>
-        <div className="userButtonsContainer">
-          <div className="userButton">Settings</div>
-          <div className="userButton" onClick={() => dispatch(logout())}>
-            Logout
-          </div>
-        </div>
+      </div>
+
+      <div className="buttonsBlock">
+        <DefaultButton text="Logout" events={{ onClick: () => dispatch(logout()) }} />
       </div>
     </div>
   );

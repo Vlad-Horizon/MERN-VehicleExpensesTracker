@@ -1,28 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { useInputTextResult } from './inputs/inputText/useInputText';
+import { useFileInputsResult } from './inputsInterfaces/toFileInputs';
+import { useTextInputsResult } from './inputsInterfaces/toTextInputs';
 
 // ----------------------------------------------------------------------
 
 interface useForm {
-  inputs: { [key: string]: useInputTextResult };
+  textInputs?: { [key: string]: useTextInputsResult };
+  fileInputs?: { [key: string]: useFileInputsResult };
   submitFunction: Function;
 }
 
 // ----------------------------------------------------------------------
 
-export function useForm({ inputs, submitFunction }: useForm) {
+export default function useForm({ textInputs = {}, fileInputs = {}, submitFunction }: useForm) {
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    const inputsArray = Object.values(inputs);
-    const valisStatys = inputsArray.every((input) => input.valid);
+    let valisStatysText = false;
+    let valisStatysFile = false;
 
-    if (valisStatys) {
+    if (textInputs) {
+      const inputsArray = Object.values(textInputs);
+      valisStatysText = inputsArray.every((input) => input.valid);
+    } else {
+      valisStatysText = true;
+    }
+
+    if (fileInputs) {
+      const inputsArray = Object.values(fileInputs);
+      valisStatysFile = inputsArray.every((input) => input.valid);
+    } else {
+      valisStatysFile = true;
+    }
+
+    if (valisStatysText && valisStatysFile) {
       setValid(true);
     } else {
       setValid(false);
     }
-  }, [inputs]);
+  }, [textInputs, fileInputs]);
 
   const submit = () => {
     if (!valid) return;
@@ -33,6 +49,7 @@ export function useForm({ inputs, submitFunction }: useForm) {
     valid,
     submit,
     //
-    inputs,
+    textInputs,
+    fileInputs,
   };
 }

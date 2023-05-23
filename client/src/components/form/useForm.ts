@@ -12,7 +12,7 @@ interface useForm {
 
 // ----------------------------------------------------------------------
 
-export function useForm({ textInputs = {}, fileInputs = {}, submitFunction }: useForm) {
+export default function useForm({ textInputs = {}, fileInputs = {}, submitFunction }: useForm) {
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {

@@ -5,11 +5,9 @@ import {
   DefaultButton,
   Galery,
   Hr,
-  InputText,
   LineButtons,
   PathToPage,
   Popup,
-  ScrollHorizontel,
   TableBody,
   TableContainer,
   TableHead,
@@ -19,10 +17,11 @@ import { useParams } from 'react-router';
 import NoPhoto from '../../assets/img/no-photo-620x495.jpg';
 
 import './carDetails.scss';
-import { useInputText } from '../../hooks';
 import { CAR_PAGE } from '../../routes/paths';
 import carApi from '../../services/carApi';
 import costApi from '../../services/carCostApi';
+import { regPatterns } from '../../config/config';
+import { useForm, useInputText, InputText } from '../../components/form';
 
 interface carCostInterface {
   carId: string;
@@ -106,98 +105,99 @@ export default function CarDetails() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('up');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [addCostsPopup, setAddCostsPopup] = useState<boolean>(false);
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [costId, setCostId] = useState<string | null>(null);
+  const [carDetails, setCarDetails] = useState<carDetailsProps>();
 
-  const addName = useInputText({
-    name: 'addName',
-    label: 'Name',
-    inputValue: '',
-    reg: /^[A-ZА-Я][a-zа-я ]*$/,
-    required: true,
-    submit: isSubmit,
-  });
-  const addCategory = useInputText({
-    name: 'addCategory',
-    label: 'Category',
-    inputValue: '',
-    reg: /^[A-ZА-Я][a-zа-я ]*$/,
-    required: true,
-    submit: isSubmit,
-  });
-  const addDete = useInputText({
-    name: 'addDete',
-    label: 'Dete',
-    inputValue: '',
-    reg: /^([0-9]{2}|[0-9]{1})\.[0-9]{2}\.[0-9]{4}$/,
-    required: true,
-    submit: isSubmit,
-  });
-  const addPrice = useInputText({
-    name: 'addPrice',
-    label: 'Price',
-    inputValue: '',
-    reg: /^[0-9]+$/,
-    required: true,
-    submit: isSubmit,
-  });
-  const addNumber = useInputText({
-    name: 'addNumber',
-    label: 'Number',
-    inputValue: '',
-    reg: /^[0-9]+$/,
-    required: true,
-    submit: isSubmit,
-  });
-  const closePopup = () => {
-    if (isEdit) {
-      setCostId(null);
-      setIsEdit(false);
-
-      addName.reset();
-      addCategory.reset();
-      addDete.reset();
-      addPrice.reset();
-      addNumber.reset();
-    }
-
-    setAddCostsPopup(false);
-  };
-
-  const submitAddCosts = async () => {
-    setIsSubmit(true);
-
-    if (!addName.valid || !addCategory.valid || !addDete.valid || !addPrice.valid || !addNumber.valid) return;
-
+  const onSubmit = async () => {
     if (isEdit) {
       await costApi.editCost({
         carId: carId,
         costId: costId,
-        name: addName.value,
-        category: addCategory.value,
-        date: addDete.value,
-        price: +addPrice.value,
-        number: +addNumber.value,
+        name: form.textInputs.addName.value,
+        category: form.textInputs.addCategory.value,
+        date: form.textInputs.addDate.value,
+        price: +form.textInputs.addPrice.value,
+        number: +form.textInputs.addNumber.value,
       });
-
-      clearAddCostsInputs();
+      form.textInputs.addName.reset();
+      form.textInputs.addCategory.reset();
+      form.textInputs.addDate.reset();
+      form.textInputs.addPrice.reset();
+      form.textInputs.addNumber.reset();
+      setAddCostsPopup(false);
       return;
     }
-
     await costApi.addCost({
       carId: carId,
-      name: addName.value,
-      category: addCategory.value,
-      date: addDete.value,
-      price: +addPrice.value,
-      number: +addNumber.value,
+      name: form.textInputs.addName.value,
+      category: form.textInputs.addCategory.value,
+      date: form.textInputs.addDate.value,
+      price: +form.textInputs.addPrice.value,
+      number: +form.textInputs.addNumber.value,
     });
-
-    clearAddCostsInputs();
+    form.textInputs.addName.reset();
+    form.textInputs.addCategory.reset();
+    form.textInputs.addDate.reset();
+    form.textInputs.addPrice.reset();
+    form.textInputs.addNumber.reset();
+    setAddCostsPopup(false);
   };
 
-  const [carDetails, setCarDetails] = useState<carDetailsProps>();
+  const form = useForm({
+    submitFunction: onSubmit,
+
+    textInputs: {
+      addName: useInputText({
+        name: 'addName',
+        placeholder: 'Name',
+        inputValue: '',
+        reg: regPatterns.carCost.name,
+        required: true,
+      }),
+      addCategory: useInputText({
+        name: 'addCategory',
+        placeholder: 'Category',
+        inputValue: '',
+        reg: regPatterns.carCost.category,
+        required: true,
+      }),
+      addDate: useInputText({
+        name: 'addDate',
+        placeholder: 'Dete',
+        inputValue: '',
+        reg: regPatterns.carCost.date,
+        required: true,
+      }),
+      addPrice: useInputText({
+        name: 'addPrice',
+        placeholder: 'Price',
+        inputValue: '',
+        reg: regPatterns.carCost.price,
+        required: true,
+      }),
+      addNumber: useInputText({
+        name: 'addNumber',
+        placeholder: 'Number',
+        inputValue: '',
+        reg: regPatterns.carCost.number,
+        required: true,
+      }),
+    },
+  });
+
+  const closePopup = () => {
+    if (isEdit) {
+      setCostId(null);
+      setIsEdit(false);
+      form.textInputs.addName.reset();
+      form.textInputs.addCategory.reset();
+      form.textInputs.addDate.reset();
+      form.textInputs.addPrice.reset();
+      form.textInputs.addNumber.reset();
+    }
+    setAddCostsPopup(false);
+  };
 
   useEffect(() => {
     getcarById();
@@ -209,20 +209,8 @@ export default function CarDetails() {
     setCarDetails(cars);
   };
 
-  const clearAddCostsInputs = () => {
-    addName.reset();
-    addCategory.reset();
-    addDete.reset();
-    addPrice.reset();
-    addNumber.reset();
-
-    setIsSubmit(false);
-    setAddCostsPopup(false);
-  };
-
   const tbodyData = () => {
     if (!carDetails) return [];
-
     return sortArrayByParam(carDetails.costs, filterParam, sortDirection);
   };
 
@@ -244,7 +232,6 @@ export default function CarDetails() {
     } else if (searchKeyword === '') {
       return row;
     }
-
     return;
   });
 
@@ -255,15 +242,14 @@ export default function CarDetails() {
 
   const editRowInTable = (id: string) => {
     if (!carDetails) return;
-
     const toEdit = carDetails.costs.find((item) => item.id === id);
     if (toEdit === undefined) return;
     setCostId(id);
-    addName.setValue(toEdit.name);
-    addCategory.setValue(toEdit.category);
-    addDete.setValue(toEdit.date);
-    addPrice.setValue(toEdit.price.toString());
-    addNumber.setValue(toEdit.number.toString());
+    form.textInputs.addName.setValue(toEdit.name);
+    form.textInputs.addCategory.setValue(toEdit.category);
+    form.textInputs.addDate.setValue(toEdit.date);
+    form.textInputs.addPrice.setValue(toEdit.price.toString());
+    form.textInputs.addNumber.setValue(toEdit.number.toString());
     setAddCostsPopup(true);
     setIsEdit(true);
   };
@@ -291,7 +277,7 @@ export default function CarDetails() {
 
         <div className="carInfo">
           <div className="carName">
-            <span>{carDetails ? `${carDetails.brend} ${carDetails.model}` : ''}</span>
+            <span>{carDetails && carDetails.brend ? `${carDetails.brend} ${carDetails.model}` : ''}</span>
           </div>
           <CarNumber number={carDetails && carDetails.number} />
           <Hr />
@@ -309,10 +295,9 @@ export default function CarDetails() {
             text="Додати витрати"
             border
             events={{
-              onClick: () => {
-                setAddCostsPopup(true);
-              },
+              onClick: () => setAddCostsPopup(true),
             }}
+            style={{ marginTop: '16px' }}
           />
         </div>
       </div>
@@ -325,69 +310,12 @@ export default function CarDetails() {
       </TableContainer>
 
       {addCostsPopup && (
-        <Popup
-          name="Add costs"
-          close={() => {
-            closePopup();
-          }}
-          submit={() => {
-            submitAddCosts();
-          }}
-        >
-          <InputText
-            name={addName.name}
-            value={addName.value}
-            viewName={addName.label}
-            error={addName.error}
-            errorText={addName.errorText}
-            events={{
-              onChange: addName.onChange,
-            }}
-          />
-
-          <InputText
-            name={addCategory.name}
-            value={addCategory.value}
-            viewName={addCategory.label}
-            error={addCategory.error}
-            errorText={addCategory.errorText}
-            events={{
-              onChange: addCategory.onChange,
-            }}
-          />
-
-          <InputText
-            name={addDete.name}
-            value={addDete.value}
-            viewName={addDete.label}
-            error={addDete.error}
-            errorText={addDete.errorText}
-            events={{
-              onChange: addDete.onChange,
-            }}
-          />
-
-          <InputText
-            name={addPrice.name}
-            value={addPrice.value}
-            viewName={addPrice.label}
-            error={addPrice.error}
-            errorText={addPrice.errorText}
-            events={{
-              onChange: addPrice.onChange,
-            }}
-          />
-
-          <InputText
-            name={addNumber.name}
-            value={addNumber.value}
-            viewName={addNumber.label}
-            error={addNumber.error}
-            errorText={addNumber.errorText}
-            events={{
-              onChange: addNumber.onChange,
-            }}
-          />
+        <Popup name="Add costs" close={closePopup} submit={form.submit}>
+          <InputText defaultProps={form.textInputs.addName} />
+          <InputText defaultProps={form.textInputs.addCategory} />
+          <InputText defaultProps={form.textInputs.addDate} />
+          <InputText defaultProps={form.textInputs.addPrice} />
+          <InputText defaultProps={form.textInputs.addNumber} />
         </Popup>
       )}
     </>

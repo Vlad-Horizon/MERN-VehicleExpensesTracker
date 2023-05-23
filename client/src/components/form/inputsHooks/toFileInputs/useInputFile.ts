@@ -5,7 +5,7 @@ import { useInputFilesFilter } from './useInputFilesFilter';
 
 // -----------------------------------------------------------------
 
-export function useInputFiles({
+export default function useInputFiles({
   name,
   placeholder,
   required = false,
@@ -16,7 +16,7 @@ export function useInputFiles({
   const [files, setFiles] = useState<Array<File> | null>(null);
   const [isDrag, setIsDrag] = useState<boolean>(false);
 
-  const { objectFiles } = useInputAddFiles({ files, setFiles, multiple });
+  const { objectFiles, setObjectFiles } = useInputAddFiles({ files, setFiles, multiple });
   const { valid, error, errorText, onBlur } = useInputFilesFilter({
     accept,
     size,
@@ -60,6 +60,7 @@ export function useInputFiles({
     required,
     multiple,
     setFiles,
+    setObjectFiles,
 
     isDrag,
     handleDragOver,

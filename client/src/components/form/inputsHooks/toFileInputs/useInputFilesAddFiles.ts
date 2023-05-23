@@ -49,5 +49,6 @@ export const useInputAddFiles = ({ files, setFiles, multiple }: useInputFileFilt
 
   return {
     objectFiles,
+    setObjectFiles,
   };
 };

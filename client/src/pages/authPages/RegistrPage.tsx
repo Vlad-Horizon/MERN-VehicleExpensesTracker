@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useForm } from '../../components/form/useForm';
-import { useInputText } from '../../components/form/inputsHooks/toTextInputs/useInputText';
-import InputText from '../../components/form/inputs/inputText/InputText';
 import Form from '../../components/form/Form';
 import { regPatterns } from '../../config/config';
 import './authPages.scss';
@@ -9,6 +6,7 @@ import authService from '../../services/authService';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH_AUTH } from '../../routes/paths';
 import { DefaultButton } from '../../components';
+import { useForm, useInputText, InputText, InputPassword } from '../../components/form';
 
 export default function RegistrPage() {
   const navigate = useNavigate();
@@ -59,7 +57,7 @@ export default function RegistrPage() {
           <div className="authForm">
             <div className={'inputsBlock'}>
               <InputText defaultProps={form.textInputs.userName} />
-              <InputText defaultProps={form.textInputs.password} />
+              <InputPassword defaultProps={form.textInputs.password} />
             </div>
             <div className="buttonsBlock">
               <DefaultButton text="Submit" bg events={{ onClick: form.submit }} />

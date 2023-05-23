@@ -19,6 +19,7 @@ export interface useFileInputsResult {
   multiple: boolean;
   setFiles: Function;
   onBlur: Function;
+  setObjectFiles: Function;
 
   handleDragOver: Function;
   handleDragLeave: Function;

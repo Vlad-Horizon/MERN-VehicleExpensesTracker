@@ -1,59 +1,90 @@
-import React, {useState, useEffect} from 'react'
-import { useInputText } from '../../hooks';
-import InputText from '../formsConponents/inputs/inputText/InputText'
-import Popup from './Popup'
+import React, { useState, useEffect } from 'react';
+import Popup from './Popup';
 
 interface componentProps {
-  close: Function,
+  close: Function;
 }
 
 const lates = [
-  ['q', 'й'], ['Q', 'Й'],
-  ['w', 'ц'], ['W', 'Ц'],
-  ['e', 'у'], ['E', 'У'],
-  ['r', 'к'], ['R', 'К'],
-  ['t', 'е'], ['T', 'Е'],
-  ['y', 'н'], ['Y', 'Н'],
-  ['u', 'г'], ['U', 'Г'],
-  ['i', 'ш'], ['I', 'Ш'],
-  ['o', 'щ'], ['O', 'Щ'],
-  ['p', 'з'], ['P', 'З'],
-  ['[', 'х'], ['{', 'Х'],
-  [']', 'ї'], ['}', 'Ї'],
-  
-  ['a', 'ф'], ['A', 'Ф'],
-  ['s', 'і'], ['S', 'І'],
-  ['d', 'в'], ['D', 'В'],
-  ['f', 'а'], ['F', 'А'],
-  ['g', 'п'], ['G', 'П'],
-  ['h', 'р'], ['H', 'Р'],
-  ['j', 'о'], ['J', 'О'],
-  ['k', 'л'], ['K', 'Л'],
-  ['l', 'д'], ['L', 'Д'],
-  [';', 'ж'], [':', 'Ж'],
-  [`'`, 'є'], ['"', 'Є'],
+  ['q', 'й'],
+  ['Q', 'Й'],
+  ['w', 'ц'],
+  ['W', 'Ц'],
+  ['e', 'у'],
+  ['E', 'У'],
+  ['r', 'к'],
+  ['R', 'К'],
+  ['t', 'е'],
+  ['T', 'Е'],
+  ['y', 'н'],
+  ['Y', 'Н'],
+  ['u', 'г'],
+  ['U', 'Г'],
+  ['i', 'ш'],
+  ['I', 'Ш'],
+  ['o', 'щ'],
+  ['O', 'Щ'],
+  ['p', 'з'],
+  ['P', 'З'],
+  ['[', 'х'],
+  ['{', 'Х'],
+  [']', 'ї'],
+  ['}', 'Ї'],
 
-  ['z', 'я'], ['Z', 'Я'],
-  ['x', 'ч'], ['X', 'Ч'],
-  ['c', 'с'], ['C', 'С'],
-  ['v', 'м'], ['V', 'М'],
-  ['b', 'и'], ['B', 'И'],
-  ['n', 'т'], ['N', 'Т'],
-  ['m', 'ь'], ['M', 'Ь'],
-  [',', 'б'], ['<', 'Б'],
-  ['.', 'ю'], ['>', 'Ю'],
-  ['/', '.'], ['?', ','],
-]
+  ['a', 'ф'],
+  ['A', 'Ф'],
+  ['s', 'і'],
+  ['S', 'І'],
+  ['d', 'в'],
+  ['D', 'В'],
+  ['f', 'а'],
+  ['F', 'А'],
+  ['g', 'п'],
+  ['G', 'П'],
+  ['h', 'р'],
+  ['H', 'Р'],
+  ['j', 'о'],
+  ['J', 'О'],
+  ['k', 'л'],
+  ['K', 'Л'],
+  ['l', 'д'],
+  ['L', 'Д'],
+  [';', 'ж'],
+  [':', 'Ж'],
+  [`'`, 'є'],
+  ['"', 'Є'],
 
-export default function PopupConvertKeyboard({close}: componentProps) {
-  const convertKeyboard = useInputText({name: 'convertKeyboard', label: 'Convert', inputValue: '', submit: true});
+  ['z', 'я'],
+  ['Z', 'Я'],
+  ['x', 'ч'],
+  ['X', 'Ч'],
+  ['c', 'с'],
+  ['C', 'С'],
+  ['v', 'м'],
+  ['V', 'М'],
+  ['b', 'и'],
+  ['B', 'И'],
+  ['n', 'т'],
+  ['N', 'Т'],
+  ['m', 'ь'],
+  ['M', 'Ь'],
+  [',', 'б'],
+  ['<', 'Б'],
+  ['.', 'ю'],
+  ['>', 'Ю'],
+  ['/', '.'],
+  ['?', ','],
+];
+
+export default function PopupConvertKeyboard({ close }: componentProps) {
+  // const convertKeyboard = useInputText({ name: 'convertKeyboard', label: 'Convert', inputValue: '', submit: true });
 
   const convertWords = async (str: string) => {
     if (!navigator.clipboard) return;
 
     const isCyrillic = /[а-яіїєґ]/i.test(str);
 
-    let result = "";
+    let result = '';
     for (let i = 0; i < str.length; i++) {
       let char = str[i];
       for (let j = 0; j < lates.length; j++) {
@@ -71,8 +102,8 @@ export default function PopupConvertKeyboard({close}: componentProps) {
       }
       result += char;
     }
-    copyText(result)
-  }
+    copyText(result);
+  };
 
   const copyText = (text: string) => {
     // Створюємо тимчасовий елемент textarea
@@ -91,7 +122,7 @@ export default function PopupConvertKeyboard({close}: componentProps) {
 
   return (
     <>
-      <Popup
+      {/* <Popup
         name={'Convert keyboard'}
         submit={() => {convertWords(convertKeyboard.value)}}
         close={close}
@@ -109,7 +140,7 @@ export default function PopupConvertKeyboard({close}: componentProps) {
             }
           }}
         />
-      </Popup>
+      </Popup> */}
     </>
-  )
+  );
 }

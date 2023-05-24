@@ -12,7 +12,7 @@ const url = {
   api_2: process.env.REACT_APP_API_URL,
 };
 
-const CLEAN_API = `${protocol.https}://${url.api_2}`;
+const CLEAN_API = url.api_2;
 
 // export const API = `${CLEAN_API}/api`
 export const API = `${CLEAN_API}`;

@@ -9,9 +9,10 @@ const protocol = {
 const url = {
   localHost: '127.0.0.1:3002',
   api_1: '192.168.43.197:3002',
+  api_2: process.env.REACT_APP_API_URL,
 };
 
-const CLEAN_API = `${protocol.http}://${url.api_1}`;
+const CLEAN_API = `${protocol.https}://${url.api_2}`;
 
 // export const API = `${CLEAN_API}/api`
 export const API = `${CLEAN_API}`;

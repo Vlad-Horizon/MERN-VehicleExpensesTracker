@@ -20,7 +20,7 @@ interface componentEvents {
 
 export default function DefaultButton({ text, to, border, bg, red, events, style }: compotentProps) {
   const [shouldRender, setShouldRender] = useState<boolean>(false);
-  const refButton = useRef<HTMLDivElement>(null);
+  const refButton = useRef<any>(null);
   const circlePosition = useRef({ x: 0, y: 0 });
 
   const mainButtonElement = () => {
@@ -35,6 +35,12 @@ export default function DefaultButton({ text, to, border, bg, red, events, style
       circlePosition.current.y = y;
     };
 
+    const keyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === 'Enter') {
+        refButton.current.click();
+      }
+    };
+
     return (
       <div
         ref={refButton}
@@ -43,6 +49,7 @@ export default function DefaultButton({ text, to, border, bg, red, events, style
           red ? 'defaultButton_bg_red' : ''
         }`}
         style={style}
+        onKeyDown={keyPress}
         onMouseDown={(e) => {
           setShouldRender(true);
           handleClick(e);

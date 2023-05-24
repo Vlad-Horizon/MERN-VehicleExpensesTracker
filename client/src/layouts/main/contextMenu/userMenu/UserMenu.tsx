@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultButton } from '../../../../components';
+import { useContextMenu } from '../../../../hooks/ContextMenu';
 import { logout } from '../../../../redux/slices/userSlice';
 import { dispatch, store } from '../../../../redux/store';
 
@@ -8,6 +9,7 @@ import './userMenu.scss';
 
 export default function UserMenu() {
   const { user } = store.getState();
+  const { contextMenuStatys, toggle } = useContextMenu();
   const userName = user.user.userName;
 
   return (
@@ -20,7 +22,15 @@ export default function UserMenu() {
       </div>
 
       <div className="buttonsBlock">
-        <DefaultButton text="Logout" events={{ onClick: () => dispatch(logout()) }} />
+        <DefaultButton
+          text="Logout"
+          events={{
+            onClick: () => {
+              dispatch(logout());
+              toggle('');
+            },
+          }}
+        />
       </div>
     </div>
   );

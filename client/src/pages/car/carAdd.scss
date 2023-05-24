@@ -37,6 +37,13 @@
   }
 }
 
+.popupDownButtonsBlock {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 10px;
+}
+
 @media (max-width: 600px) {
   .addCarPage {
     flex-direction: column;

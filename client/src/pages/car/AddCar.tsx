@@ -220,15 +220,27 @@ export default function CarList({ isEdit = false }: CarListInterface) {
 
         {editFiles && (
           <Popup
-            name="Edit files"
+            popupLogo="Edit files"
             // submit={() => carIMG.fileBase64 && decodeBase64(carIMG.fileBase64[0])}
-            submit={() => console.log(1)}
+            // submit={() => console.log(1)}
             close={() => setEditFiles(false)}
           >
             <PopupGalery
               carImgFiles={form.fileInputs.carImages.objectFiles}
               setFilesSorted={form.fileInputs.carImages.setObjectFiles}
             />
+
+            <div className="popupDownButtonsBlock">
+              <DefaultButton
+                text="Close"
+                border
+                events={{
+                  onClick: () => {
+                    setEditFiles(false);
+                  },
+                }}
+              />
+            </div>
           </Popup>
         )}
       </DragAndDrop>

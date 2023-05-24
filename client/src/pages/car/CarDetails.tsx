@@ -310,12 +310,25 @@ export default function CarDetails() {
       </TableContainer>
 
       {addCostsPopup && (
-        <Popup name="Add costs" close={closePopup} submit={form.submit}>
+        <Popup close={closePopup} popupLogo="Add cost">
           <InputText defaultProps={form.textInputs.addName} />
           <InputText defaultProps={form.textInputs.addCategory} />
           <InputText defaultProps={form.textInputs.addDate} />
           <InputText defaultProps={form.textInputs.addPrice} />
           <InputText defaultProps={form.textInputs.addNumber} />
+
+          <div className="popupDownButtonsBlock">
+            <DefaultButton text="Add" bg events={{ onClick: form.submit }} style={{ marginRight: '5px' }} />
+            <DefaultButton
+              text="Close"
+              border
+              events={{
+                onClick: () => {
+                  setAddCostsPopup(false);
+                },
+              }}
+            />
+          </div>
         </Popup>
       )}
     </>

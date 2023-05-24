@@ -62,6 +62,13 @@
   width: 100%;
 }
 
+.popupDownButtonsBlock {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 10px;
+}
+
 // .rc-scrollbars-container {
 //   .rc-scrollbars-view {
 //     scrollbar-width: none;

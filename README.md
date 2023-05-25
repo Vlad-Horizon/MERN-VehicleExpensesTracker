@@ -71,6 +71,23 @@ cd server
 npm test
 ```
 
+## Config client and server
+
+to change the configuration, you can use the config files in both projects.
+
+Server: 
+```bash
+cd VehicleExpensesTracker-main/server/config/config.js
+```
+
+Client: 
+```bash
+cd VehicleExpensesTracker-main/client/src/config/config.ts
+```
+
+It is also possible to perform configuration using env files.
+env file client and server examples are at the root dir of each project.
+
 ## Technologies Used
 
 - React

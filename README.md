@@ -23,14 +23,14 @@ The project consists of both a server-side and client-side implementation. The t
 
 ## Installation
 
-1. Clone the repository:
+1. Clone or download the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Vlad-Horizon/VehicleExpensesTracker.git
 ```
 
 2. Navigate to the project directory:
 ```bash
-cd vehicle-expenses-tracker
+cd VehicleExpensesTracker-main
 ```
 
 3. Install the dependencies for the server-side:
@@ -53,9 +53,11 @@ cd server
 npm start
 ```
 
+open the second console
+
 2. Start the client:
 ```bash
-cd ../client
+cd VehicleExpensesTracker-main/client
 npm start
 ```
 
@@ -85,8 +87,4 @@ npm test
 
 ## Contributors
 
-- [Your Name]
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+- [Vlad Horizon]

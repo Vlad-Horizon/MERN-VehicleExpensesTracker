@@ -19,7 +19,7 @@ function Header() {
       <div className="header">
         <div className="innerHeader">
           <RadioButton sx={{ padding: '0', hover: 0 }}>
-            <Logo />
+          VET
           </RadioButton>
 
           {/* <Search /> */}

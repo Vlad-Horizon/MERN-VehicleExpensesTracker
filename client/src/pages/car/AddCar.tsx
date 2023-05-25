@@ -32,12 +32,25 @@ export default function CarList({ isEdit = false }: CarListInterface) {
   const [convertKeyboardStatys, setConvertKeyboardStatys] = useState<boolean>(false);
   const [editFiles, setEditFiles] = useState<boolean>(false);
 
-  const onSubmit = () => {
-    if (!form.valid) return;
+  const onSubmit = async () => {
+    try {
+      if (!form.valid) return;
 
-    if (isEdit && carId) {
-      carApi.editCar({
-        carId: carId,
+      if (isEdit && carId) {
+        await carApi.editCar({
+          carId: carId,
+          brend: form.textInputs.carBrend.value,
+          model: form.textInputs.carModel.value,
+          year: form.textInputs.carYear.value,
+          number: form.textInputs.carNumber.value,
+          price: +form.textInputs.carPrice.value,
+          images: form.fileInputs.carImages.objectFiles.map((file) => file.base64),
+        });
+        navigate('/');
+        return;
+      }
+  
+      await carApi.createCar({
         brend: form.textInputs.carBrend.value,
         model: form.textInputs.carModel.value,
         year: form.textInputs.carYear.value,
@@ -46,18 +59,9 @@ export default function CarList({ isEdit = false }: CarListInterface) {
         images: form.fileInputs.carImages.objectFiles.map((file) => file.base64),
       });
       navigate('/');
-      return;
-    }
+    } catch {
 
-    carApi.createCar({
-      brend: form.textInputs.carBrend.value,
-      model: form.textInputs.carModel.value,
-      year: form.textInputs.carYear.value,
-      number: form.textInputs.carNumber.value,
-      price: +form.textInputs.carPrice.value,
-      images: form.fileInputs.carImages.objectFiles.map((file) => file.base64),
-    });
-    navigate('/');
+    }
   };
 
   const form = useForm({

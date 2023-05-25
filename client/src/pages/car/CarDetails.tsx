@@ -108,12 +108,31 @@ export default function CarDetails() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [costId, setCostId] = useState<string | null>(null);
   const [carDetails, setCarDetails] = useState<carDetailsProps>();
+  const [checkEditCarDetails, setCheckEditCarDetails] = useState<boolean>(false);
 
   const onSubmit = async () => {
-    if (isEdit) {
-      await costApi.editCost({
+    try {
+      if (isEdit) {
+        await costApi.editCost({
+          carId: carId,
+          costId: costId,
+          name: form.textInputs.addName.value,
+          category: form.textInputs.addCategory.value,
+          date: form.textInputs.addDate.value,
+          price: +form.textInputs.addPrice.value,
+          number: +form.textInputs.addNumber.value,
+        });
+        form.textInputs.addName.reset();
+        form.textInputs.addCategory.reset();
+        form.textInputs.addDate.reset();
+        form.textInputs.addPrice.reset();
+        form.textInputs.addNumber.reset();
+        setAddCostsPopup(false);
+        setCheckEditCarDetails(!checkEditCarDetails);
+        return;
+      }
+      await costApi.addCost({
         carId: carId,
-        costId: costId,
         name: form.textInputs.addName.value,
         category: form.textInputs.addCategory.value,
         date: form.textInputs.addDate.value,
@@ -126,22 +145,10 @@ export default function CarDetails() {
       form.textInputs.addPrice.reset();
       form.textInputs.addNumber.reset();
       setAddCostsPopup(false);
-      return;
+      setCheckEditCarDetails(!checkEditCarDetails);
+    } catch {
+      setAddCostsPopup(false);
     }
-    await costApi.addCost({
-      carId: carId,
-      name: form.textInputs.addName.value,
-      category: form.textInputs.addCategory.value,
-      date: form.textInputs.addDate.value,
-      price: +form.textInputs.addPrice.value,
-      number: +form.textInputs.addNumber.value,
-    });
-    form.textInputs.addName.reset();
-    form.textInputs.addCategory.reset();
-    form.textInputs.addDate.reset();
-    form.textInputs.addPrice.reset();
-    form.textInputs.addNumber.reset();
-    setAddCostsPopup(false);
   };
 
   const form = useForm({
@@ -202,7 +209,7 @@ export default function CarDetails() {
 
   useEffect(() => {
     getcarById();
-  }, []);
+  }, [checkEditCarDetails]);
 
   const getcarById = async () => {
     if (!carId) return;

@@ -4,12 +4,12 @@ import { useInputTextValidation } from './useInputTextValidation';
 
 // -----------------------------------------------------------------
 
-export default function useInputText({ name, placeholder, inputValue, reg, required = false }: useTextInputs) {
+export default function useInputText({ name, placeholder, inputValue, reg, required = false, errorTextInvalid }: useTextInputs) {
   const [value, setValue] = useState<string>(inputValue);
   const [isVisited, setIsVisited] = useState<boolean>(false);
   const [paste, setPaste] = useState<string>('');
   // validation
-  const validation = useInputTextValidation({ value, reg, required, isVisited });
+  const validation = useInputTextValidation({ value, reg, required, isVisited, errorTextInvalid });
   const { error, errorText, valid, setError, setValid } = validation;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

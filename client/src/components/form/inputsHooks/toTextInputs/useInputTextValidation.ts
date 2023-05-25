@@ -7,6 +7,7 @@ interface useInputTextValidation {
   reg?: RegExp;
   required?: boolean;
   isVisited: boolean;
+  errorTextInvalid?: string;
 }
 
 // -----------------------------------------------------------------
@@ -20,7 +21,7 @@ const errorsList = {
 
 // -----------------------------------------------------------------
 
-export function useInputTextValidation({ value, reg, required = false, isVisited }: useInputTextValidation) {
+export function useInputTextValidation({ value, reg, required = false, isVisited, errorTextInvalid }: useInputTextValidation) {
   const [valid, setValid] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
@@ -43,7 +44,11 @@ export function useInputTextValidation({ value, reg, required = false, isVisited
     }
 
     if (!checkValueResult) {
-      setErrorFunction(errorsList.ua.invalid);
+      if (errorTextInvalid) {
+        setErrorFunction(errorTextInvalid);
+      } else {
+        setErrorFunction(errorsList.ua.invalid);
+      }
       return;
     }
 

@@ -4,6 +4,7 @@ export interface useTextInputs {
   inputValue: string;
   reg?: RegExp;
   required?: boolean;
+  errorTextInvalid?: string
 }
 
 export interface useTextInputsResult {

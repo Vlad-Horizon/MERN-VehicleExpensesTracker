@@ -165,6 +165,7 @@ export default function CarDetails() {
       addDate: useInputText({
         name: 'addDate',
         placeholder: 'Dete',
+        errorTextInvalid: 'dd.mm.yyyy',
         inputValue: '',
         reg: regPatterns.carCost.date,
         required: true,

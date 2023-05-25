@@ -85,10 +85,7 @@ Client:
 cd VehicleExpensesTracker-main/client/src/config/config.ts
 ```
 
-It is also possible to perform configuration using env files.
-
-<br/>
-
+It is also possible to perform configuration using env files. <br/>
 env file client and server examples are at the root dir of each project.
 
 ## Technologies Used

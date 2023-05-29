@@ -12,7 +12,14 @@
     flex-basis: 50%;
     flex-grow: 0;
     max-width: 50%;
-    height: 500px;
+    width: 100%;
+    height: 100%;
+
+    .innerImageContainer {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .addCarForm {

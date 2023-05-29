@@ -22,6 +22,7 @@ import carApi from '../../services/carApi';
 import costApi from '../../services/carCostApi';
 import { regPatterns } from '../../config/config';
 import { useForm, useInputText, InputText } from '../../components/form';
+import { Helmet } from 'react-helmet';
 
 interface carCostInterface {
   carId: string;
@@ -264,6 +265,11 @@ export default function CarDetails() {
 
   return (
     <>
+    
+      <Helmet>
+        <title>Car details</title>
+      </Helmet>
+
       <div className="pageHeader">
         <PathToPage
           props={[

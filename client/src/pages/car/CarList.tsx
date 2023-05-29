@@ -4,6 +4,7 @@ import { ButtonsHeader, CarCard, CarCardsContainer, DefaultButton, PathToPage } 
 import './carList.scss';
 import { CAR_PAGE } from '../../routes/paths';
 import carApi from '../../services/carApi';
+import { Helmet } from 'react-helmet';
 
 interface carsListParams {
   id: string;
@@ -28,6 +29,10 @@ export default function CarList() {
 
   return (
     <>
+      <Helmet>
+        <title>Car list</title>
+      </Helmet>
+
       <div className="pageHeader">
         <PathToPage props={[['Car list', CAR_PAGE.list]]} />
 

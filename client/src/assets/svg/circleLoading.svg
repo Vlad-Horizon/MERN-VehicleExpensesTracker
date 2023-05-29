@@ -6,6 +6,7 @@
     cy="44" 
     r="20.2" 
     fill="none"
+    class="buttonLoadeCircle"
   >
   </circle>
 </svg>

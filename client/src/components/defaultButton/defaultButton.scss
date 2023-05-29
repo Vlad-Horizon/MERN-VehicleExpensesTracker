@@ -90,6 +90,17 @@
   }
 }
 
+.defaultButton_load {
+  color: rgb(108,119,130);
+  background-color: rgb(51,59,68);
+  box-shadow: none;
+
+  &:hover {
+    background-color: rgb(51,59,68);
+    box-shadow: rgba(51,59,68) 0px 8px 16px 0px;
+  }
+}
+
 @keyframes animation-buttonCircle {
   0% {
     transform: scale(0);

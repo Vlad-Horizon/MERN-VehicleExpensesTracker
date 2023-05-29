@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import InputText from '../../components/form/inputs/inputText/InputText';
 import Form from '../../components/form/Form';
 import { regPatterns } from '../../config/config';
-import { dispatch } from '../../redux/store';
+import { dispatch, store } from '../../redux/store';
 import { login } from '../../redux/slices/userSlice';
 import { Link } from 'react-router-dom';
 import { PATH_AUTH } from '../../routes/paths';
@@ -11,8 +12,17 @@ import './authPages.scss';
 import { InputPassword, useForm, useInputText } from '../../components/form';
 
 export default function LoginPage() {
-  const onSubmit = () => {
-    dispatch(login(form.textInputs.userName.value, form.textInputs.password.value));
+  const [reqError, setReqError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onSubmit = async() => {
+    setLoading(true)
+    await dispatch(login(form.textInputs.userName.value, form.textInputs.password.value));
+
+    const { user } = store.getState();
+    setReqError(user.error.message);
+    
+    setLoading(false)
   };
 
   const form = useForm({
@@ -34,25 +44,14 @@ export default function LoginPage() {
         required: true,
       }),
     },
-
-    // fileInputs: {
-    //   test: useInputFiles({
-    //     name: 'test',
-    //     placeholder: 'test',
-    //     multiple: true,
-    //     required: true,
-    //   }),
-    // },
   });
 
   return (
     <>
-      {/* <DragAndDrop
-        isDrag={form.fileInputs.test.isDrag}
-        handleDragLeave={(e: any) => form.fileInputs.test.handleDragLeave(e)}
-        handleDragOver={(e: any) => form.fileInputs.test.handleDragOver(e)}
-        handlerDrop={(e: any) => form.fileInputs.test.handlerDrop(e)}
-      > */}
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
+
       <div className="loginPageComponent">
         <div className="pageName">Login</div>
         <div className="redirect">
@@ -67,15 +66,16 @@ export default function LoginPage() {
             <div className={'inputsBlock'}>
               <InputText defaultProps={form.textInputs.userName} />
               <InputPassword defaultProps={form.textInputs.password} />
-              {/* <InputFile defaultProps={form.fileInputs.test} /> */}
             </div>
+          {
+            reqError && <div className='inputTextError'>{reqError}</div>
+          }
             <div className="buttonsBlock">
-              <DefaultButton text="Submit" bg events={{ onClick: form.submit }} />
+              <DefaultButton text="Submit" bg events={{ onClick: form.submit }} isLoad={loading} />
             </div>
           </div>
         </Form>
       </div>
-      {/* </DragAndDrop> */}
     </>
   );
 }

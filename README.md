@@ -101,7 +101,3 @@ env file client and server examples are at the root dir of each project.
 - Axios
 - React Router DOM
 - Jest
-
-## Contributors
-
-- [Vlad Horizon]
